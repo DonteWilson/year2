@@ -50,6 +50,7 @@ int main()
 	mat4 sun;
 	mat4 earth;
 	mat4 venus;
+	mat4 moon;
 	mat4 jupiter;
 
 
@@ -59,13 +60,21 @@ int main()
 
 	glClearColor(0.25f, 0.25f, 0.25f, 1);
 	glEnable(GL_DEPTH_TEST);
+	float angle = 0;
 
-
-	while (glfwWindowShouldClose(window) == false &&
-		glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
+	while (glfwWindowShouldClose(window) == false &&	glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
+		float time = (float)glfwGetTime();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		angle += (3.14f/180.f);
+		
+		sun = glm::rotate(angle, vec3(0, 1, 0));
+		jupiter = sun * glm::translate(vec3( 9, 0, 3));
+		earth = sun * glm::translate(vec3(5, 0, 1));
+		venus = sun * glm::translate(vec3(7, 0, 2));
+		moon = earth * glm::translate(vec3(5, 0, 0));
 
 		Gizmos::clear();
 
@@ -84,11 +93,21 @@ int main()
 				vec3(-10, 0, -10 + i),
 				i == 10 ? white : black);
 		}
+		vec4 red(255, 0, 0, 1);
+		vec4 blue(0, 0, 255, 1);
+		vec4 orange(255, 128,0,1 );
+		vec4 brownish(233, 150, 122, 1);
+		
 
-		/*Gizmos::addSphere();
-		Gizmos::addSphere();
-		Gizmos::addSphere();
-		Gizmos::addSphere();*/
+		Gizmos::addSphere(vec3(sun[3]), 1, 10, 10, orange, &sun);
+		Gizmos::addSphere(vec3(earth[3]), 0.75f, 10, 10, blue, &earth);
+		Gizmos::addSphere(vec3(venus[3]), 0.40f, 10, 10, red, &venus);
+		Gizmos::addSphere(vec3(moon[3]), 0.65f, 10, 10, white, &moon);
+		Gizmos::addSphere(vec3(jupiter[3]), 0.5f, 10, 10, brownish, &jupiter);
+
+		//Gizmos::addSphere();
+		//Gizmos::addSphere();
+		//Gizmos::addSphere();
 
 		Gizmos::draw(projection * view);
 
