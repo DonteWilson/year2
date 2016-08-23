@@ -81,7 +81,27 @@ void Solar::Draw()
 }
 bool Solar::Update()
 {
-	return true;
+	float angle = 0;
+
+	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		angle += (3.14f / 180.f);
+
+		sun = glm::rotate(angle, vec3(0, 1, 0));
+		jupiter = sun * glm::translate(vec3(9, 0, 3));
+		earth = sun * glm::translate(vec3(5, 0, 1));
+		venus = sun * glm::translate(vec3(7, 0, 2));
+		moon = earth * glm::translate(vec3(5, 0, 0));
+
+		Gizmos::clear();
+
+		Gizmos::addTransform(glm::mat4(1));
+
+		return true;
+	}
+	return false;
 
 }
 void Solar::Terminate()
