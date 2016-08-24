@@ -110,3 +110,8 @@ void Solar::Terminate()
 	glfwDestroyWindow(window);
 	
 }
+
+bool Solar::Init()
+{
+
+}

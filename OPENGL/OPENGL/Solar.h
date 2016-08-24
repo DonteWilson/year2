@@ -14,10 +14,11 @@ class Solar : public Application
 
 public:
 
-	bool Create();
-	void Terminate();
-	void Draw();
-	bool Update();
+	bool Create() override;
+	void Terminate() override;
+	void Draw() override;
+	bool Update() override;
+	bool Init() override;
 
 private:
 

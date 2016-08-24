@@ -5,7 +5,7 @@
 #include <ext.hpp>
 #include <glm.hpp>
 
-
+#include "Solar.h"
 
 
 using glm::vec3;
@@ -17,6 +17,13 @@ using glm::mat4;
 
 int main()
 {
+
+	Application * app = new Solar();
+	while (app->Init())
+	{
+
+	}
+
 	if (glfwInit() == false)
 		return -1;
 
