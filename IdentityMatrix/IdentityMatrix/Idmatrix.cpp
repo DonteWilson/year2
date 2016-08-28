@@ -1,12 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <iomanip>  // for setw, setfill
+#include <iomanip>  
+//Shows the Idenity Matrix
 
 
-
-int binary(int number);
-std::string binStr(unsigned int exponent, unsigned int size);
+int binary(int num);
+std::string bStr(unsigned int expo, unsigned int size);
 
 int main()
 {
@@ -25,9 +25,9 @@ int main()
 	// Fill the matrix
 	for (int col = 0; col<input; col++)
 	{
-		std::string bin = binStr(input - col, input);
+		std::string b = bStr(input - col, input);
 		for (int row = 0; row<input; row++)
-			matrix[col][row] = bin[row] - '0';
+			matrix[col][row] = b[row] - '0';
 	}
 
 
@@ -42,12 +42,12 @@ int main()
 	return 0;
 }
 
-std::string binStr(unsigned int exponent, unsigned int size)
+std::string bStr(unsigned int expo, unsigned int size)
 {
 	//Returns
 	std::string str(size, '0');
-	if (exponent <= size && exponent > 0)
-		str[size - exponent] = '1';
+	if (expo <= size && expo > 0)
+		str[size - expo] = '1';
 	return str;
 
 
