@@ -1,5 +1,5 @@
 ﻿  Idmatrix.cpp
-c:\users\donte.wilson.aie\desktop\year2w\identitymatrix\identitymatrix\idmatrix.cpp(35): warning C4018: '<': signed/unsigned mismatch
-c:\users\donte.wilson.aie\desktop\year2w\identitymatrix\identitymatrix\idmatrix.cpp(37): warning C4018: '<': signed/unsigned mismatch
-  IdentityMatrix.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\IdentityMatrix\Debug\IdentityMatrix.exe
-  IdentityMatrix.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\IdentityMatrix\Debug\IdentityMatrix.pdb (Partial PDB)
+c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix.cpp(35): warning C4018: '<': signed/unsigned mismatch
+c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix.cpp(37): warning C4018: '<': signed/unsigned mismatch
+  IdentityMatrix.vcxproj -> C:\Users\Jitte\Desktop\year2\IdentityMatrix\Debug\IdentityMatrix.exe
+  IdentityMatrix.vcxproj -> C:\Users\Jitte\Desktop\year2\IdentityMatrix\Debug\IdentityMatrix.pdb (Partial PDB)
