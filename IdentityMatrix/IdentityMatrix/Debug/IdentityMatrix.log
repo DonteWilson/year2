@@ -1,5 +1,8 @@
-﻿  Idmatrix.cpp
+﻿  Idmatrix1.cpp
+c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix1.cpp(27): warning C4018: '<': signed/unsigned mismatch
+c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix1.cpp(29): warning C4018: '<': signed/unsigned mismatch
+  Idmatrix.cpp
 c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix.cpp(35): warning C4018: '<': signed/unsigned mismatch
 c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix.cpp(37): warning C4018: '<': signed/unsigned mismatch
-  IdentityMatrix.vcxproj -> C:\Users\Jitte\Desktop\year2\IdentityMatrix\Debug\IdentityMatrix.exe
-  IdentityMatrix.vcxproj -> C:\Users\Jitte\Desktop\year2\IdentityMatrix\Debug\IdentityMatrix.pdb (Partial PDB)
+  Generating Code...
+c:\users\jitte\desktop\year2\identitymatrix\identitymatrix\idmatrix1.cpp(13): error C4700: uninitialized local variable 'input' used
