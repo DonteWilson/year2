@@ -125,6 +125,8 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Solar.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="FlyCamera.h" />
     <ClInclude Include="src\Gizmos.h" />
     <ClInclude Include="src\gl_core_4_4.h" />
   </ItemGroup>
