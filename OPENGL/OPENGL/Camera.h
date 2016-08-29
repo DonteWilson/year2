@@ -5,6 +5,8 @@
 #include <ext.hpp>
 #include <glm.hpp>
 
+
+//Enables the use of mat4, vec3, vec4
 using glm::mat4;
 using glm::vec3;
 using glm::vec4;
@@ -18,6 +20,7 @@ public:
 	void setPerspective(float FoV, float aspectRatio, float near, float far);
 	void setLookAt(vec3 from, vec3 to, vec3 up);
 	void setPosition(vec3 position);
+	void updateProjectionViewTransform();
 	virtual void update(float deltaTime) = 0;
 	mat4 getWorldTransform();
 	mat4 getView();
@@ -32,13 +35,16 @@ private:
 
 };
 
-void Camera::update(float deltaTime)
+void Camera::updateProjectionViewTransform()
 {
-
+	//Multiplies the projectiontransform by the view transform.
+	projectionViewTransform = projectionTransform * viewTransform;
 }
+
 
 void Camera::setPerspective(float FoV, float aspectRatio, float near, float far)
 {
+	//Contains perspective that holds field of view, aspectratio, near, and far
 	projectionTransform = glm::perspective(FoV, aspectRatio, near, far);
 }
 
