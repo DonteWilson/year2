@@ -30,9 +30,6 @@
     <ClCompile Include="Matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="perspective.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gl_core_4_4.h">
@@ -45,12 +42,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Solar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FlyCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

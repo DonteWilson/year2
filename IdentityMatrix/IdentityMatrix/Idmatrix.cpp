@@ -8,12 +8,10 @@
 int binary(int number);
 std::string binStr(unsigned int exponent, unsigned int size);
 
-typedef std::vector<std::vector<int>> VectorMat;
-
 int main()
 {
 
-	VectorMat matrix;
+	std::vector<std::vector<int> > matrix;
 	//Ask the user for the size of the matrix
 	std::cout << "Size of the Matrix" << std::endl;
 	int input;
