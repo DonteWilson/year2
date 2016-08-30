@@ -121,6 +121,7 @@
     <ClCompile Include="src\Gizmos.cpp" />
     <ClCompile Include="src\gl_core_4_4.c" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="src\Oldmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
