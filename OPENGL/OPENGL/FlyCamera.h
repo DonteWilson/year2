@@ -40,7 +40,7 @@ void FlyCamera::update(float deltaTime)
 	}
 	if(glfwGetKey(window,GLFW_KEY_S))
 	{
-		Transform = glm::translate(vec3(0, 0, (0 * deltaTime) * 10));
+		Transform = glm::translate(vec3(0, 0, (0.10f * deltaTime) * 10));
 	}
 	if(glfwGetKey(window,GLFW_KEY_D))
 	{

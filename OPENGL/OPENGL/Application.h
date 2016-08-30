@@ -19,7 +19,6 @@ public:
 	virtual bool Update() = 0;
 	virtual void Terminate() = 0;
 	virtual bool Create() = 0;
-	virtual bool Init() = 0;
 	
 
 };

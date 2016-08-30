@@ -11,7 +11,7 @@
 int main()
 {
 	//Creates a new solar instance.
-	Solar* solar = new Solar;
+	Application* solar = new Solar();
 
 	//Checks to see if create bool is set to true, then run functions
 	if (solar->Create() == true)

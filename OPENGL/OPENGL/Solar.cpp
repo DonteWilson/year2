@@ -1,6 +1,10 @@
 #include "Solar.h"
 #include <iostream>
 
+Solar::Solar()
+{
+	
+}
 //sets a bool for create and if true then the function will run.
 bool Solar::Create()
 {
@@ -23,19 +27,17 @@ bool Solar::Create()
 
 	if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
 	{
-
-		Gizmos::destroy();
 		glfwDestroyWindow(window);
 		glfwTerminate();
-		return -3;
+		return false;
 	}
 
 
 	//Creates mat 4 objects that will be used to represent the planets.
 	Gizmos::create();
 
-	mat4 view = glm::lookAt(vec3(10, 10, 10), vec3(0), vec3(0, 1, 0));
-	mat4 projection = glm::perspective(glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f);
+	view = glm::lookAt(vec3(10, 10, 10), vec3(0), vec3(0, 1, 0));
+	projection = glm::perspective(glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f);
 	mat4 sun;
 	mat4 earth;
 	mat4 venus;
@@ -66,6 +68,11 @@ void Solar::Draw()
 	vec4 blue(0, 0, 255, 1);
 	vec4 orange(255, 128, 0, 1);
 	vec4 brownish(233, 150, 122, 1);
+
+	Gizmos::addLine(vec3(moon[3]), vec3(earth[3]), red);
+	Gizmos::addLine(vec3(moon[3]), vec3(earth[3]), red);
+	Gizmos::addLine(vec3(moon[3]), vec3(earth[3]), red);
+	Gizmos::addLine(vec3(moon[3]), vec3(earth[3]), red);
 
 	//Adds Spheres that will represent planets
 	Gizmos::addSphere(vec3(sun[3]), 1, 10, 10, orange, &sun);
@@ -104,10 +111,10 @@ bool Solar::Update()
 		venus = sun * glm::translate(vec3(7, 0, 2));
 		moon = earth * glm::translate(vec3(5, 0, 0));
 
-		Gizmos::clear();
+		//Gizmos::clear();
 
-		//Adds Gizmos transform
-		Gizmos::addTransform(glm::mat4(1));
+		////Adds Gizmos transform
+		//Gizmos::addTransform(glm::mat4(1));
 
 		//returns true
 		return true;
