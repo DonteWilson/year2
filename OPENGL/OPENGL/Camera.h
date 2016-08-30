@@ -58,6 +58,24 @@ void Camera::setPosition(vec3 position)
 
 }
 
+mat4 Camera::getWorldTransform()
+{
+	return worldTransform;
+}
+mat4 Camera::getProjectionView()
+{
+	return projectionViewTransform;
+}
+mat4 Camera::getProjection()
+{
+	return projectionTransform;
+}
+mat4 Camera::getView()
+{
+	return viewTransform;
+}
+
+
 
 
 

@@ -1,3 +1,8 @@
-﻿LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.exe
-  OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.pdb (Partial PDB)
+﻿  Oldmain.cpp
+  Solar.cpp
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\solar.cpp(30): warning C4305: 'return': truncation from 'int' to 'bool'
+  main.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+main.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall Solar::Init(void)" (?Init@Solar@@UAE_NXZ)
+C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.exe : fatal error LNK1120: 1 unresolved externals
