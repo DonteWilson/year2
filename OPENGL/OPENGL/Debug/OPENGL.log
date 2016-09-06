@@ -1,3 +1,7 @@
-﻿  Solar.cpp
+﻿  main.cpp
+  Solar.cpp
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\flycamera.h(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\flycamera.h(63): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.exe
   OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.pdb (Partial PDB)

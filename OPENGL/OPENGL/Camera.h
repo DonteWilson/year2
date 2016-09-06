@@ -42,10 +42,10 @@ void Camera::updateProjectionViewTransform()
 }
 
 
-void Camera::setPerspective(float FoV, float aspectRatio, float near, float far)
+void Camera::setPerspective(float FoV, float aspectRatio, float n, float f)
 {
 	//Contains perspective that holds field of view, aspectratio, near, and far
-	projectionTransform = glm::perspective(FoV, aspectRatio, near, far);
+	projectionTransform = glm::perspective(FoV, aspectRatio, n, f);
 }
 
 void Camera::setLookAt(vec3 from, vec3 to, vec3 up)

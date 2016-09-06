@@ -1,5 +1,8 @@
 #include "Solar.h"
 #include <iostream>
+#include "Camera.h"
+#include "FlyCamera.h"
+
 
 Solar::Solar()
 {
@@ -8,6 +11,7 @@ Solar::Solar()
 //sets a bool for create and if true then the function will run.
 bool Solar::Create()
 {
+	Camera* myCamera = new FlyCamera;
 	float time = (float)glfwGetTime();
 
 	if (glfwInit() == false)

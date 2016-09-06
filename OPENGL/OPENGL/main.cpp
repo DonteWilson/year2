@@ -4,7 +4,6 @@
 #include "src\Gizmos.h"
 #include <ext.hpp>
 #include <glm.hpp>
-
 #include "Solar.h"
 
 
@@ -12,6 +11,9 @@ int main()
 {
 	//Creates a new solar instance.
 	Application* solar = new Solar();
+
+
+
 
 	//Checks to see if create bool is set to true, then run functions
 	if (solar->Create() == true)
