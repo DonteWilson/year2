@@ -1,0 +1,14 @@
+﻿  POM.cpp
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(9): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(53): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(54): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(55): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(57): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(58): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\jitte\desktop\year2\pomatrices\pomatrices\pom.cpp(59): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  POmatrices.vcxproj -> C:\Users\Jitte\Desktop\year2\POmatrices\Debug\POmatrices.exe
+  POmatrices.vcxproj -> C:\Users\Jitte\Desktop\year2\POmatrices\Debug\POmatrices.pdb (Partial PDB)
