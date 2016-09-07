@@ -1,5 +1,6 @@
 #ifndef FlyCamera_H_
 #define FlyCamera_H_
+#include <iostream>
 
 #include "Camera.h"
 
@@ -7,7 +8,7 @@ class FlyCamera : public Camera
 {
 public:
 	FlyCamera();
-	virtual void update(float deltaTime) override;
+	void update(float deltaTime);
 	void setSpeed(float speed);
 
 
@@ -30,6 +31,7 @@ FlyCamera::FlyCamera()
 	prevY = 0;
 }
 
+#endif FlyCamera_H_
 
 
 void FlyCamera::update(float deltaTime)
@@ -89,7 +91,7 @@ void FlyCamera::update(float deltaTime)
 
 	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		Transform = glm::translate(vec3(0, 0, (0 * deltaTime) * 10));
+		Transform = glm::translate(vec3(0, 0, (0.10f * deltaTime) * 10));
 	}
 	if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS)
 	{
@@ -110,4 +112,4 @@ void FlyCamera::setSpeed(float speed)
 }
 
 
-#endif FlyCamera_H_
+

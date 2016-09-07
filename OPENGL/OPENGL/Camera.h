@@ -1,20 +1,22 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
-#include <iostream>
 #include <GLFW\glfw3.h>
 #include <ext.hpp>
 #include <glm.hpp>
+#include "src/Gizmos.h"
+#include "src/gl_core_4_4.h"
+#include <gtc/matrix_transform.hpp>
+#include <gtx/transform.hpp>
 
 
 //Enables the use of mat4, vec3, vec4
 using glm::mat4;
 using glm::vec3;
-using glm::vec4;
 
 class Camera
 {
 public:
-	mat4 worldTransform;
+	
 	mat4 viewTransform;
 	mat4 ptojectionViewTransform;
 	void setPerspective(float FoV, float aspectRatio, float near, float far);
@@ -29,11 +31,13 @@ public:
 
 
 private:
-
 	mat4 projectionTransform;
 	mat4 projectionViewTransform;
+	mat4 worldTransform;
 
 };
+
+#endif 
 
 void Camera::updateProjectionViewTransform()
 {
@@ -81,4 +85,3 @@ mat4 Camera::getView()
 
 
 
-#endif 

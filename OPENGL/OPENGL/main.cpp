@@ -11,7 +11,7 @@ int main()
 {
 	//Creates a new solar instance.
 	Application* solar = new Solar();
-
+//	Application* app = new RenderingGeometry();
 
 
 

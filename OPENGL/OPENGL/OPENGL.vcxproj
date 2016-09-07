@@ -118,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Solar.cpp" />
+    <ClCompile Include="Geo.cpp" />
     <ClCompile Include="src\Gizmos.cpp" />
     <ClCompile Include="src\gl_core_4_4.c" />
     <ClCompile Include="Matrix.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Solar.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FlyCamera.h" />
+    <ClInclude Include="Geo.h" />
     <ClInclude Include="src\Gizmos.h" />
     <ClInclude Include="src\gl_core_4_4.h" />
   </ItemGroup>
