@@ -83,13 +83,13 @@ void Geo::Draw()
 	glBindVertexArray(m_VAO);
 
 	//Circle
-	//DrawCircle(5, false);
+	//DrawCircle(8, false);
 
 	//Plane
-	DrawPlane(5,5);
+	DrawPlane(8,8);
 
 	//Cube
-	//DrawCube(5,5);
+	//DrawCube(8,8);
 
 
 
