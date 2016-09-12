@@ -24,8 +24,9 @@ using glm::vec4;
 
 struct Vertex
 {
-	vec4 colour;
 	vec4 position;
+	vec4 colour;
+	
 };
 class Geo : public Application
 {

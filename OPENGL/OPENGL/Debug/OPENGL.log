@@ -1,4 +1,4 @@
 ﻿  Geo.cpp
-c:\users\jitte\desktop\year2\opengl\opengl\geo.cpp(74): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  OPENGL.vcxproj -> C:\Users\Jitte\Desktop\year2\OPENGL\Debug\OPENGL.exe
-  OPENGL.vcxproj -> C:\Users\Jitte\Desktop\year2\OPENGL\Debug\OPENGL.pdb (Partial PDB)
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(74): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.exe
+  OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.pdb (Partial PDB)

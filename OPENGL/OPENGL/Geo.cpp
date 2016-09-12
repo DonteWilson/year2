@@ -2,7 +2,7 @@
 
 Geo::Geo()
 {
-	CreateDirectory("Info/", NULL);
+	CreateDirectory("Info/", nullptr);
 
 	Shaderfiles();
 	//Initialize glfw
@@ -83,13 +83,13 @@ void Geo::Draw()
 	glBindVertexArray(m_VAO);
 
 	//Circle
-	DrawCircle(5, false);
+	//DrawCircle(5, false);
 
 	//Plane
 	DrawPlane(5,5);
 
 	//Cube
-	DrawCube(5,5);
+	//DrawCube(5,5);
 
 
 
@@ -125,18 +125,14 @@ bool Geo::CreateBuffers()
 
 	//pos
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
 	//color
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
 	return true;
 	
-
-
-
-	return true;
 }
 bool Geo::GetShaders()
 {
@@ -157,9 +153,9 @@ bool Geo::GetShaders()
 	m_vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	m_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	glShaderSource(m_vertexShader, 1, (const char**)&vsSource, 0);
+	glShaderSource(m_vertexShader, 1, (const char**)&vsSource, nullptr);
 	glCompileShader(m_vertexShader);
-	glShaderSource(m_fragmentShader, 1, (const char**)&fsSource, 0);
+	glShaderSource(m_fragmentShader, 1, (const char**)&fsSource, nullptr);
 	glCompileShader(m_fragmentShader);
 	//..
 
@@ -174,7 +170,7 @@ bool Geo::GetShaders()
 		int infoLogLength = 0;
 		glGetProgramiv(m_programID, GL_INFO_LOG_LENGTH, &infoLogLength);
 		char* infoLog = new char[infoLogLength];
-		glGetProgramInfoLog(m_programID, infoLogLength, 0, infoLog);
+		glGetProgramInfoLog(m_programID, infoLogLength, nullptr, infoLog);
 		printf("Error: Failed to link shader program!\n");
 		printf("%s\n", infoLog);
 		delete[] infoLog;
@@ -190,7 +186,7 @@ bool Geo::GetShaders()
 bool Geo::Shaderfiles()
 {
 	//Create default vertShader incase user doesnt have a file to read from at first
-	const char* vertShader = "#version 410\n \
+	const char* vsSource = "#version 410\n \
 							layout(location=0) in vec4 position; \
 							layout(location=1) in vec4 colour; \
 							out vec4 vColour; \
@@ -198,7 +194,7 @@ bool Geo::Shaderfiles()
 							void main() {vColour = colour; gl_Position = projectionViewWorldMatrix * position; }";
 
 	//Create default fragShader incase user doesnt have a file to read from at first
-	const char* fragShader = "#version 410\n \
+	const char* fsSource = "#version 410\n \
 							in vec4 vColour; \
 							out vec4 fragColor; \
 							void main() { fragColor = vColour; }";
@@ -210,11 +206,11 @@ bool Geo::Shaderfiles()
 	//Vert shader
 	if (vertfile.fail())
 	{
-		std::cout << "File failed to open!\n";
+		std::cout << "Failed to open\n";
 	}
 	else
 	{
-		vertfile << vertShader;
+		vertfile << vsSource;
 	}
 
 	//Frag shader
@@ -224,7 +220,7 @@ bool Geo::Shaderfiles()
 	}
 	else
 	{
-		fragfile << fragShader;
+		fragfile << fsSource;
 	}
 
 	return true;
@@ -280,7 +276,7 @@ void Geo::DrawCube(const int &width, const int &height)
 		sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-25, 0, 0))));
-	glDrawElements(GL_TRIANGLE_STRIP, 13, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLE_STRIP, 13, GL_UNSIGNED_INT, nullptr);
 }
 void Geo::DrawCircle(const int &radius, bool isFilled)
 {
@@ -312,9 +308,9 @@ void Geo::DrawCircle(const int &radius, bool isFilled)
 
 	//If false, then dont fill circle
 	if (!isFilled)
-		glDrawElements(GL_TRIANGLE_STRIP, 24, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLE_STRIP, 24, GL_UNSIGNED_INT, nullptr);
 	else //Triangle fan fills in the circle
-		glDrawElements(GL_TRIANGLE_FAN, 24, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLE_FAN, 24, GL_UNSIGNED_INT, nullptr);
 }
 void Geo::DrawPlane(const int &width, const int &height)
 {
@@ -328,6 +324,11 @@ void Geo::DrawPlane(const int &width, const int &height)
 	vertices[2].position = vec4(-width, 0, height, 1);
 	vertices[3].position = vec4(width, 0, height, 1);
 
+	vertices[0].colour = vec4(1, 0, 0, 1);
+	vertices[1].colour = vec4(0, 1, 0, 1);
+	vertices[2].colour = vec4(0, 0, 1, 1);
+	vertices[3].colour = vec4(1, 0, 0, 1);
+
 	//Set the buffer data for the vertices
 	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex),
 		vertices, GL_STATIC_DRAW);
@@ -337,5 +338,5 @@ void Geo::DrawPlane(const int &width, const int &height)
 		sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
 	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 2, -5))));
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, nullptr);
 }
