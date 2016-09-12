@@ -60,4 +60,11 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Info\default.txt" />
+    <Text Include="Info\fdefault.txt" />
+    <Text Include="Info\fshader.txt" />
+    <Text Include="Info\vdefault.txt" />
+    <Text Include="Info\vertshader.txt" />
+  </ItemGroup>
 </Project>

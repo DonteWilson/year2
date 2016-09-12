@@ -16,9 +16,9 @@ class Application
 public:
 	
 	virtual void Draw() = 0;
-	virtual bool Update() = 0;
+	virtual bool update() = 0;
 	virtual void Terminate() = 0;
-	virtual bool Create() = 0;
+	virtual bool create() = 0;
 	
 
 };

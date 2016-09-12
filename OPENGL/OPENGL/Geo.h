@@ -32,14 +32,15 @@ class Geo : public Application
 public:
 	Geo();
 	void Draw() override;
-	bool Update() override;
+	bool update() override;
 	void Terminate() override;
-	bool Create() override;
+	bool create() override;
 
 private:
 
 	GLFWwindow* window;
 	glm::mat4 m_projectionViewMatrix;
+	unsigned int m_projectionViewUniform;
 	unsigned int m_vertexShader;
 	unsigned int m_fragmentShader;
 	unsigned int m_IBO;
@@ -48,9 +49,13 @@ private:
 	unsigned int m_programID;
 	float m_time;
 
+	void DrawPlane(const int &width, const int &height);
+	void DrawCube(const int &width, const int &height);
+	void DrawCircle(const int &radius, bool isFilled);
+
 
 	std::string ReadFile(const std::string &a_File);
-	bool ComplileShader();
+	bool GetShaders();
 	bool Shaderfiles();
 	bool CreateBuffers();
 

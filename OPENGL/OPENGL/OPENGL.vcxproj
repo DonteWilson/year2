@@ -133,6 +133,13 @@
     <ClInclude Include="src\Gizmos.h" />
     <ClInclude Include="src\gl_core_4_4.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Info\default.txt" />
+    <Text Include="Info\fdefault.txt" />
+    <Text Include="Info\fshader.txt" />
+    <Text Include="Info\vdefault.txt" />
+    <Text Include="Info\vertshader.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

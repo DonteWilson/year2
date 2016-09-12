@@ -1,30 +1,26 @@
 #include <iostream>
-#include "src\gl_core_4_4.h"
-#include <GLFW\glfw3.h>
-#include "src\Gizmos.h"
-#include <ext.hpp>
-#include <glm.hpp>
-#include "Solar.h"
+#include "Application.h"
+#include "Geo.h"
 
 
 int main()
 {
 	//Creates a new solar instance.
-	Application* solar = new Solar();
+	Application* geo = new Geo();
 //	Application* app = new RenderingGeometry();
 
 
 
 	//Checks to see if create bool is set to true, then run functions
-	if (solar->Create() == true)
+	if (geo->create() == true)
 	{
 		//while update is true then the programw will run the draw function
-		while (solar->Update() == true)
-			solar->Draw();
-		solar->Terminate();
+		while (geo->update() == true)
+			geo->Draw();
+		geo->Terminate();
 	}
 
-	delete solar;
+	delete geo;
 
 
 	
