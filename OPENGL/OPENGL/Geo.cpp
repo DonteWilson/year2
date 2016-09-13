@@ -1,5 +1,68 @@
 #include "Geo.h"
 
+//Finding Verts for the circle.
+std::vector<glm::vec4>CV(int np, float radius)
+{
+	//number of points
+	std::vector<glm::vec4> numpts;
+	for (int i = 0; i < np; i++)
+	{
+		float theta = glm::pi<float>() * (float)i / (float)(np - 1);
+		//current X and Y
+		float curX = radius * sin(theta);
+		float curY = radius * cos(theta);
+
+		//brings it  back to the start o
+		numpts.push_back(vec4(curX, curY, 0.f, 1));
+
+	}
+
+	//returns the number of points 
+	return numpts;
+}
+//Generates indices 
+std::vector<unsigned int>GI(int nm, int np)
+{
+	std::vector<unsigned int> indices;
+	for (unsigned int i = 0; i < nm; i++) //nm = 4
+	{
+		unsigned int start = i * np;
+		for (int j = 0; j < np; j++) //np = 3
+		{
+			unsigned int botR = (start + np + j);
+			unsigned int botL = (start + j);
+			indices.push_back(botL);
+			indices.push_back(botR);
+		}
+
+		indices.push_back(0xFFFF);
+	}
+	//returns the indices
+	return indices;
+}
+//Rotating points
+std::vector<glm::vec4>RP(std::vector<glm::vec4> &begin, int nm)
+{
+	std::vector<glm::vec4> vertices;
+
+	for(int i = 0; i <= nm; i++)
+	{
+		float phi = 2 * glm::pi<float>() * float(i) / float(nm);
+		for (int j = 0; j < begin.size(); j++)
+		{
+			//sets the current  x y and z values.
+			float curX = begin[j].x * cos(phi) + begin[j].z * sin(phi);
+			float curY = begin[j].y;
+			float curZ = begin[j].z * cos(phi) - begin[j].x * sin(phi);
+
+			//push back the verts
+			vertices.push_back(vec4(curX, curY, curZ, 1.f));
+		}
+	}
+
+	return vertices;
+}
+
 Geo::Geo()
 {
 	CreateDirectory("Info/", nullptr);
@@ -52,6 +115,10 @@ void Geo::Terminate()
 
 bool Geo::create()
 {
+	unsigned int Points = 15;
+	unsigned int Meridians = 15;
+
+	std::vector<vec4> halfCircle = CV(Points, 5.f);
 	//Puts the buffers onto the screen
 	CreateBuffers();
 	//GetShaders
@@ -67,6 +134,7 @@ bool Geo::update()
 	}
 	return false;
 }
+
 void Geo::Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -83,14 +151,15 @@ void Geo::Draw()
 	glBindVertexArray(m_VAO);
 
 	//Circle
-	//DrawCircle(8, false);
+glDrawElements(GL_TRIANGLE_STRIP, )
 
 	//Plane
-	DrawPlane(8,8);
+	//DrawPlane(8,8);
 
 	//Cube
 	//DrawCube(8,8);
 
+	
 
 
 	glBindVertexArray(0);
@@ -128,7 +197,7 @@ bool Geo::CreateBuffers()
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
 	//color
-	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(10);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
 	return true;
@@ -249,6 +318,8 @@ std::string Geo::ReadFile(const std::string &a_File)
 	return components;
 
 }
+
+
 void Geo::DrawCube(const int &width, const int &height)
 {
 	const unsigned int top = width;

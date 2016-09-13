@@ -1,4 +1,6 @@
 ﻿  Geo.cpp
-c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(74): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(26): warning C4018: '<': signed/unsigned mismatch
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(50): warning C4018: '<': signed/unsigned mismatch
+c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(140): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.exe
   OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.pdb (Partial PDB)
