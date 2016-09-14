@@ -104,9 +104,17 @@ Geo::Geo()
 void Geo::Terminate()
 {
 	glDeleteProgram(m_programID);
-	glDeleteVertexArrays(1, &m_VAO);
-	glDeleteBuffers(1, &m_VBO);
-	glDeleteBuffers(1, &m_IBO);
+	glDeleteVertexArrays(1, &m_planeVAO);
+	glDeleteBuffers(1, &m_planeVBO);
+	glDeleteBuffers(1, &m_planeIBO);
+
+	glDeleteVertexArrays(1, &m_circleVAO);
+	glDeleteBuffers(1, &m_circleVBO);
+	glDeleteBuffers(1, &m_circleIBO);
+
+	glDeleteVertexArrays(1, &m_cubeVAO);
+	glDeleteBuffers(1, &m_cubeVBO);
+	glDeleteBuffers(1, &m_cubeIBO);
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
@@ -120,7 +128,9 @@ bool Geo::create()
 
 	std::vector<vec4> halfCircle = CV(Points, 5.f);
 	//Puts the buffers onto the screen
-	CreateBuffers();
+	PlaneBuffer(8,8);
+	CircleBuffer(8,false);
+	CubeBuffer(8,8);
 	//GetShaders
 	GetShaders();
 
@@ -148,13 +158,14 @@ void Geo::Draw()
 
 	GLint loc = glGetUniformLocation(m_programID, "Time");
 
-	glBindVertexArray(m_VAO);
+	
 
 	//Circle
-glDrawElements(GL_TRIANGLE_STRIP, )
+	//glDrawElements(GL_TRIANGLE_STRIP, )
 
 	//Plane
-	//DrawPlane(8,8);
+	glBindVertexArray(m_planeVAO);
+	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 5, -5))));
 
 	//Cube
 	//DrawCube(8,8);
@@ -171,38 +182,38 @@ glDrawElements(GL_TRIANGLE_STRIP, )
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
-
-bool Geo::CreateBuffers()
+/*bool Geo::CreateBuffers()
 {
-	
-	//OPENGL DATA
+	//
+	////OPENGL DATA
 
-	//Create buffers
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_IBO);
+	////Create buffers
+	//glGenBuffers(1, &m_planeVBO);
+	//glGenBuffers(1, &m_planeIBO);
 
-	//Generate Array Object
-	glGenVertexArrays(1, &m_VAO);
+	////Generate Array Object
+	//glGenVertexArrays(1, &m_planeVAO);
 
-	glBindVertexArray(m_VAO);
+	//glBindVertexArray(m_VAO);
 
-	//vertex buffer
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	////vertex buffer
+	//glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	//indexes
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+	////indexes
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
-	//pos
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+	////pos
+	//glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
-	//color
-	glEnableVertexAttribArray(10);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+	////color
+	//glEnableVertexAttribArray(10);
+	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
-	return true;
+	//return true;
 	
 }
+*/
 bool Geo::GetShaders()
 {
 	//Store the returned string into a variable
@@ -320,7 +331,7 @@ std::string Geo::ReadFile(const std::string &a_File)
 }
 
 
-void Geo::DrawCube(const int &width, const int &height)
+bool Geo::CubeBuffer(const int &width, const int &height)
 {
 	const unsigned int top = width;
 
@@ -338,18 +349,39 @@ void Geo::DrawCube(const int &width, const int &height)
 	vertices[6].position = vec4(width, top, -height, 1);
 	vertices[7].position = vec4(-width, top, -height, 1);
 
-	//Set the buffer data for the vertices
-	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(Vertex),
-		vertices, GL_STATIC_DRAW);
+	//OPENGL DATA
 
-	//Set the buffer data for the indices
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 13 *
-		sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	//Create buffers
+	glGenBuffers(1, &m_cubeVBO);
+	glGenBuffers(1, &m_cubeIBO);
 
-	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-25, 0, 0))));
-	glDrawElements(GL_TRIANGLE_STRIP, 13, GL_UNSIGNED_INT, nullptr);
+	//Generate Array Object
+	glGenVertexArrays(1, &m_cubeVAO);
+
+	glBindVertexArray(m_cubeVAO);
+
+	//vertex buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_cubeVBO);
+
+	//indexes
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cubeIBO);
+
+	//Buffer vertices and indices
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+	//pos
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+	//color
+	glEnableVertexAttribArray(10);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+	return true;
 }
-void Geo::DrawCircle(const int &radius, bool isFilled)
+bool Geo::CircleBuffer(const int &radius, bool isFilled)
 {
 	// create vertex and index data for circle
 	Vertex vertices[24];
@@ -367,23 +399,40 @@ void Geo::DrawCircle(const int &radius, bool isFilled)
 		vertices[i].position = vec4(X, 0, Z, 1);
 	}
 
-	//Set the buffer data for the vertices
-	glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(Vertex),
-		vertices, GL_STATIC_DRAW);
+	//OPENGL DATA
 
-	//Set the buffer data for the indices
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 24 *
-		sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	//Create buffers
+	glGenBuffers(1, &m_circleVBO);
+	glGenBuffers(1, &m_circleIBO);
 
-	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix));
+	//Generate Array Object
+	glGenVertexArrays(1, &m_circleVAO);
 
-	//If false, then dont fill circle
-	if (!isFilled)
-		glDrawElements(GL_TRIANGLE_STRIP, 24, GL_UNSIGNED_INT, nullptr);
-	else //Triangle fan fills in the circle
-		glDrawElements(GL_TRIANGLE_FAN, 24, GL_UNSIGNED_INT, nullptr);
+	glBindVertexArray(m_circleVAO);
+
+	//vertex buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_circleVBO);
+
+	//indexes
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_circleIBO);
+
+	//Buffer vertices and indices
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+	//pos
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+	//color
+	glEnableVertexAttribArray(10);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+
+	return true;
 }
-void Geo::DrawPlane(const int &width, const int &height)
+bool Geo::PlaneBuffer(const int &width, const int &height)
 {
 	// create vertex and index data
 	Vertex vertices[4];
@@ -400,14 +449,35 @@ void Geo::DrawPlane(const int &width, const int &height)
 	vertices[2].colour = vec4(0, 0, 1, 1);
 	vertices[3].colour = vec4(1, 0, 0, 1);
 
-	//Set the buffer data for the vertices
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex),
-		vertices, GL_STATIC_DRAW);
+	//OPENGL DATA
 
-	//Set the buffer data for the indices
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 *
-		sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	//Create buffers
+	glGenBuffers(1, &m_planeVBO);
+	glGenBuffers(1, &m_planeIBO);
 
-	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 2, -5))));
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, nullptr);
+	//Generate Array Object
+	glGenVertexArrays(1, &m_planeVAO);
+
+	glBindVertexArray(m_planeVAO);
+
+	//vertex buffer
+	glBindBuffer(GL_ARRAY_BUFFER, m_planeVBO);
+
+	//indexes
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_planeIBO);
+
+	//Buffer vertices and indices
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+	//pos
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+	//color
+	glEnableVertexAttribArray(10);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+	return true;
 }

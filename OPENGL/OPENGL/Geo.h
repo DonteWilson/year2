@@ -45,15 +45,15 @@ private:
 	unsigned int m_projectionViewUniform;
 	unsigned int m_vertexShader;
 	unsigned int m_fragmentShader;
-	unsigned int m_IBO;
-	unsigned int m_VBO;
-	unsigned int m_VAO;
+	unsigned int m_circleVBO, m_circleIBO, m_circleVAO;
+	unsigned int m_planeVBO, m_planeIBO, m_planeVAO;
+	unsigned int m_cubeVBO, m_cubeIBO, m_cubeVAO;
 	unsigned int m_programID;
 	float m_time;
 
-	void DrawPlane(const int &width, const int &height);
-	void DrawCube(const int &width, const int &height);
-	void DrawCircle(const int &radius, bool isFilled);
+	bool PlaneBuffer(const int &width, const int &height);
+	bool CubeBuffer(const int &width, const int &height);
+	bool CircleBuffer(const int &radius, bool isFilled);
 	
 
 
