@@ -1,6 +1,12 @@
 ﻿  Geo.cpp
-c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(26): warning C4018: '<': signed/unsigned mismatch
-c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(50): warning C4018: '<': signed/unsigned mismatch
-c:\users\donte.wilson.aie\desktop\year2w\opengl\opengl\geo.cpp(140): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.exe
-  OPENGL.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\OPENGL\Debug\OPENGL.pdb (Partial PDB)
+c:\users\jitte\desktop\year2\opengl\opengl\geo.cpp(27): warning C4018: '<': signed/unsigned mismatch
+c:\users\jitte\desktop\year2\opengl\opengl\geo.cpp(51): warning C4018: '<': signed/unsigned mismatch
+c:\users\jitte\desktop\year2\opengl\opengl\geo.cpp(199): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jitte\desktop\year2\opengl\opengl\geo.cpp(553): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  main.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  OPENGL.vcxproj -> C:\Users\Jitte\Desktop\year2\OPENGL\Debug\OPENGL.exe
+  OPENGL.vcxproj -> C:\Users\Jitte\Desktop\year2\OPENGL\Debug\OPENGL.pdb (Partial PDB)

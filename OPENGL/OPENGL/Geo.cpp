@@ -62,6 +62,27 @@ std::vector<glm::vec4>RP(std::vector<glm::vec4> &begin, int nm)
 
 	return vertices;
 }
+Vertex* Geo::DrawHalfCircle(const int&np, const int&radius)
+{
+	int pieces = np - 1;
+
+	Vertex* vertices = new Vertex[np];
+
+	for (int i = 0; i < np; i++)
+	{
+		//Angle between each index
+		double theta = 3.14159265359 * i / pieces;
+		//get the cos of the angle and multiply by the radius
+		double X = cos(theta) * radius;
+		//get the sin of the angle and multiply by the radius
+		double Y = sin(theta) * radius;
+		//Set the appropriate values per vertex
+		vertices[i].position = vec4(X, Y, 0, 1);
+	}
+
+	return vertices;
+}
+int sElements;
 
 Geo::Geo()
 {
@@ -112,6 +133,10 @@ void Geo::Terminate()
 	glDeleteBuffers(1, &m_circleVBO);
 	glDeleteBuffers(1, &m_circleIBO);
 
+	glDeleteVertexArrays(1, &m_sphereVAO);
+	glDeleteBuffers(1, &m_sphereVBO);
+	glDeleteBuffers(1, &m_sphereIBO);
+
 	glDeleteVertexArrays(1, &m_cubeVAO);
 	glDeleteBuffers(1, &m_cubeVBO);
 	glDeleteBuffers(1, &m_cubeIBO);
@@ -123,14 +148,36 @@ void Geo::Terminate()
 
 bool Geo::create()
 {
-	unsigned int Points = 15;
-	unsigned int Meridians = 15;
+	//unsigned int index;
+	//unsigned int Points = 15;
+	//unsigned int Meridians = 15;
 
-	std::vector<vec4> halfCircle = CV(Points, 5.f);
+	//Vertex vertices[4];
+
+	//std::vector<vec4> halfCircle = CV(Points, 5.f);
+	//std::vector<vec4> sphereVerts = RP(halfCircle, Meridians);
+	//std::vector<unsigned int> sphereIndices = GI(Meridians, Points);
+
+	//index = sphereIndices.size();
+	//int vertOffset = sphereVerts.size() * sizeof(vec4);
+	//int indexOffset = sphereIndices.size() * sizeof(unsigned int);
+
+	//vertices[0].position = vec4(-5, 0, -5, 1);
+	//vertices[1].position = vec4(5, 0, -5, 1);
+	//vertices[2].position = vec4(-5, 0, 5, 1);
+	//vertices[3].position = vec4(5, 0, 5, 1);
+
+	//vertices[0].colour = vec4(1, 0, 0, 1);
+	//vertices[1].colour = vec4(0, 1, 0, 1);
+	//vertices[2].colour = vec4(0, 0, 1, 1);
+	//vertices[3].colour = vec4(1, 1, 1, 1);
+
+	//unsigned int indices[4] = { 0,2,1,3 };
 	//Puts the buffers onto the screen
 	PlaneBuffer(8,8);
 	CircleBuffer(8,false);
 	CubeBuffer(8,8);
+	SphereBuffer(5, 50, 20);
 	//GetShaders
 	GetShaders();
 
@@ -161,17 +208,29 @@ void Geo::Draw()
 	
 
 	//Circle
-	//glDrawElements(GL_TRIANGLE_STRIP, )
+	//glBindVertexArray(m_circleVAO);
+	//glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix));
+	////If false, then dont fill circle
+	//if (!isFilled)
+	//	glDrawElements(GL_TRIANGLE_STRIP, 24, GL_UNSIGNED_INT, 0);
+	//else //Triangle fan fills in the circle
+	//	glDrawElements(GL_TRIANGLE_FAN, 24, GL_UNSIGNED_INT, 0);
 
 	//Plane
-	glBindVertexArray(m_planeVAO);
-	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 5, -5))));
+	//glBindVertexArray(m_planeVAO);
+	//glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 5, -5))));
+	//glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, 0);
 
-	//Cube
-	//DrawCube(8,8);
+	////Cube
+	//glBindVertexArray(m_cubeVAO);
+	//glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-25, 0, 0))));
+	//glDrawElements(GL_TRIANGLE_STRIP, 13, GL_UNSIGNED_INT, 0);
 
 	
-
+	//Sphere
+	glBindVertexArray(m_sphereVAO);
+	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-15, -5, 5))));
+	glDrawElements(GL_LINE_LOOP, sElements , GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -478,6 +537,84 @@ bool Geo::PlaneBuffer(const int &width, const int &height)
 	//color
 	glEnableVertexAttribArray(10);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+
+	return true;
+}
+bool Geo::SphereBuffer(const int& radius, const int& np, const int& nMeridians)
+{
+	
+	//Set this so the number of elements to draw will be correct
+	sElements = np * nMeridians;
+
+	//Indices array
+	unsigned int* indices = new unsigned int[sElements];
+
+	//Set up indices count
+	for (unsigned int i = 0; i < sElements; i++)
+	{
+		indices[i] = i;
+	}
+
+	//Create original verts, the half circle
+	Vertex* Verts = DrawHalfCircle(np, 5);
+
+	//Set up a counter to start at that index of the vertices array so we can set the 
+	//respective vertex with meridian points
+	unsigned int counter = 0;
+
+	//create total verts for spehere
+	Vertex* vertices = new Vertex[sElements];
+
+	//Loop through meridians
+	for (int i = 0; i < nMeridians; i++)
+	{//Get the angle
+		double phi = 2 * 3.14159265359 * i / (nMeridians - 1);
+		//Loop through the number of points and increase the counter each time
+		for (int j = 0; j < np; j++, counter++)
+		{//Create X variable for the current x position of Verts
+			double X = Verts[j].position.x;
+			//Create Y variable for the current y position of Verts * cos(phi) - the current z position of Verts * sin(phi)
+			double Y = Verts[j].position.y * cos(phi) - Verts[j].position.z * sin(phi);
+			//Create Z variable for the current z position of Verts * cos(phi) + the current y position of Verts * sin(phi)
+			double Z = Verts[j].position.z * cos(phi) + Verts[j].position.y * sin(phi);
+
+			//Set the appropriate values per vertex
+			vertices[counter].position = vec4(X, Y, Z, 1);
+		}
+	}
+
+	// generate buffers
+	glGenBuffers(1, &m_sphereVBO);
+	glGenBuffers(1, &m_sphereIBO);
+
+	// generate vertex array object (descriptors)
+	glGenVertexArrays(1, &m_sphereVAO);
+
+
+	// all changes will apply to this handle
+	glBindVertexArray(m_sphereVAO);
+
+	// set vertex buffer data
+	glBindBuffer(GL_ARRAY_BUFFER, m_sphereVBO);
+
+	// index data
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_sphereIBO);
+
+	//Set the buffer data for the vertices
+	glBufferData(GL_ARRAY_BUFFER, sElements * sizeof(Vertex),
+		vertices, GL_STATIC_DRAW);
+
+	//Set the buffer data for the indices
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sElements *
+		sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+	// position
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+
+	// colour
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec4)));
 
 	return true;
 }

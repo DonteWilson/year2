@@ -45,6 +45,7 @@ private:
 	unsigned int m_projectionViewUniform;
 	unsigned int m_vertexShader;
 	unsigned int m_fragmentShader;
+	unsigned int m_sphereVBO, m_sphereIBO, m_sphereVAO;
 	unsigned int m_circleVBO, m_circleIBO, m_circleVAO;
 	unsigned int m_planeVBO, m_planeIBO, m_planeVAO;
 	unsigned int m_cubeVBO, m_cubeIBO, m_cubeVAO;
@@ -52,6 +53,7 @@ private:
 	float m_time;
 
 	bool PlaneBuffer(const int &width, const int &height);
+	bool SphereBuffer(const int& radius, const int & np, const int & nMeridians);
 	bool CubeBuffer(const int &width, const int &height);
 	bool CircleBuffer(const int &radius, bool isFilled);
 	
@@ -60,6 +62,7 @@ private:
 
 
 	std::string ReadFile(const std::string &a_File);
+	Vertex* DrawHalfCircle(const int &np, const int &radius);
 	bool GetShaders();
 	bool Shaderfiles();
 	bool CreateBuffers();
