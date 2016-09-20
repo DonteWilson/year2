@@ -82,6 +82,7 @@ Vertex* Geo::DrawHalfCircle(const int&np, const int&radius)
 
 	return vertices;
 }
+//sphere elements
 int sElements;
 
 Geo::Geo()
@@ -177,7 +178,7 @@ bool Geo::create()
 	PlaneBuffer(8,8);
 	CircleBuffer(8,false);
 	CubeBuffer(8,8);
-	SphereBuffer(5, 50, 20);
+	SphereBuffer(5, 100, 99);
 	//GetShaders
 	GetShaders();
 
@@ -230,7 +231,7 @@ void Geo::Draw()
 	//Sphere
 	glBindVertexArray(m_sphereVAO);
 	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-15, -5, 5))));
-	glDrawElements(GL_LINE_LOOP, sElements , GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_LINE_LOOP, sElements , GL_UNSIGNED_INT, nullptr);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -241,38 +242,7 @@ void Geo::Draw()
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
-/*bool Geo::CreateBuffers()
-{
-	//
-	////OPENGL DATA
 
-	////Create buffers
-	//glGenBuffers(1, &m_planeVBO);
-	//glGenBuffers(1, &m_planeIBO);
-
-	////Generate Array Object
-	//glGenVertexArrays(1, &m_planeVAO);
-
-	//glBindVertexArray(m_VAO);
-
-	////vertex buffer
-	//glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-
-	////indexes
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-
-	////pos
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
-
-	////color
-	//glEnableVertexAttribArray(10);
-	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
-
-	//return true;
-	
-}
-*/
 bool Geo::GetShaders()
 {
 	//Store the returned string into a variable
@@ -610,7 +580,7 @@ bool Geo::SphereBuffer(const int& radius, const int& np, const int& nMeridians)
 
 	// position
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
 
 	// colour
 	glEnableVertexAttribArray(1);
