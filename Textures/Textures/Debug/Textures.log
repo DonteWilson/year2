@@ -1,0 +1,7 @@
+﻿  texture.cpp
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(30): warning C4018: '<': signed/unsigned mismatch
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(54): warning C4018: '<': signed/unsigned mismatch
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(203): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(526): warning C4018: '<': signed/unsigned mismatch
+  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.exe
+  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.pdb (Partial PDB)
