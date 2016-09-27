@@ -12,6 +12,8 @@
 #include <vector>
 #include <fstream>
 #include "Application.h"
+#include "Camera.h"
+
 //Geometry Tutorial
 /*
 1. Draw a Plane / vbo, ibo
@@ -38,29 +40,24 @@ public:
 	void Terminate() override;
 	bool create() override;
 
-private:
+	
 
+private:
+	Camera* myCamera;
 	GLFWwindow* window;
 	glm::mat4 m_projectionViewMatrix;
 	unsigned int m_projectionViewUniform;
 	unsigned int m_vertexShader;
 	unsigned int m_fragmentShader;
-	unsigned int m_sphereVBO, m_sphereIBO, m_sphereVAO;
-	unsigned int m_circleVBO, m_circleIBO, m_circleVAO;
-	unsigned int m_planeVBO, m_planeIBO, m_planeVAO;
-	unsigned int m_cubeVBO, m_cubeIBO, m_cubeVAO;
+	unsigned int m_vao, m_vbo, m_ibo;
 	unsigned int m_programID;
+	unsigned int m_texture;
+	unsigned int m_program;
 	float m_time;
+	float m_lastFrame;
 
-	bool PlaneBuffer(const int &width, const int &height);
-	bool SphereBuffer(const int& radius, const int & np, const int & nMeridians);
-	bool CubeBuffer(const int &width, const int &height);
-	bool CircleBuffer(const int &radius, bool isFilled);
-
-
-
-
-
+	bool PlaneBuffer();
+	bool GLInitWindow();
 	std::string ReadFile(const std::string &a_File);
 	Vertex* DrawHalfCircle(const int &np, const int &radius);
 	bool GetShaders();
