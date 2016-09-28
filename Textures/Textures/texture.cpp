@@ -1,7 +1,7 @@
 #include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-
+#include <fstream>
 #include "textures.h"
 #include "FlyCamera.h"
 
@@ -68,6 +68,8 @@ bool Textures::create()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	stbi_image_free(data);
+
+	GetShaders();
 
 	PlaneBuffer();
 	m_lastFrame = 0.0f;
@@ -142,7 +144,7 @@ void Textures::Draw()
 bool Textures::GetShaders()
 {
 	//Store the returned string into a variable
-	std::string vertex = ReadFile("verttexture.txt");
+	std::string vertex = ReadFile("vertText.txt");
 
 	//Convert to const char* so it can be used in the glShaderSourceFunction
 	const char* vsSource = vertex.c_str();
@@ -169,6 +171,9 @@ bool Textures::GetShaders()
 	glAttachShader(m_programID, m_fragmentShader);
 	glLinkProgram(m_programID);
 
+	glDeleteShader(m_vertexShader);
+	glDeleteShader(m_fragmentShader);
+
 	// check that it compiled and linked correctly
 	glGetProgramiv(m_programID, GL_LINK_STATUS, &success);
 	if (success == GL_FALSE) {
@@ -181,12 +186,6 @@ bool Textures::GetShaders()
 		delete[] infoLog;
 		return false;
 	}
-
-
-
-	// we don't need to keep the individual shaders around
-	glDeleteShader(m_fragmentShader);
-	glDeleteShader(m_vertexShader);
 
 	return true;
 }

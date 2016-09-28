@@ -10,7 +10,6 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtx/transform.hpp>
 #include <vector>
-#include <fstream>
 #include "Application.h"
 #include "Camera.h"
 

@@ -116,6 +116,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FlyCamera.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Gizmos.cpp" />

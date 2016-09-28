@@ -1,14 +1,4 @@
 ﻿  texture.cpp
-c:\users\donte.wilson.aie\desktop\year2w\textures\textures\flycamera.h(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\donte.wilson.aie\desktop\year2w\textures\textures\flycamera.h(63): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(106): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-texture.obj : error LNK2005: "public: struct glm::tmat4x4<float,0> __thiscall Camera::getProjection(void)" (?getProjection@Camera@@QAE?AU?$tmat4x4@M$0A@@glm@@XZ) already defined in main.obj
-texture.obj : error LNK2005: "public: struct glm::tmat4x4<float,0> __thiscall Camera::getProjectionView(void)" (?getProjectionView@Camera@@QAE?AU?$tmat4x4@M$0A@@glm@@XZ) already defined in main.obj
-texture.obj : error LNK2005: "public: struct glm::tmat4x4<float,0> __thiscall Camera::getView(void)" (?getView@Camera@@QAE?AU?$tmat4x4@M$0A@@glm@@XZ) already defined in main.obj
-texture.obj : error LNK2005: "public: struct glm::tmat4x4<float,0> __thiscall Camera::getWorldTransform(void)" (?getWorldTransform@Camera@@QAE?AU?$tmat4x4@M$0A@@glm@@XZ) already defined in main.obj
-texture.obj : error LNK2005: "public: void __thiscall Camera::setLookAt(struct glm::tvec3<float,0>,struct glm::tvec3<float,0>,struct glm::tvec3<float,0>)" (?setLookAt@Camera@@QAEXU?$tvec3@M$0A@@glm@@00@Z) already defined in main.obj
-texture.obj : error LNK2005: "public: void __thiscall Camera::setPerspective(float,float,float,float)" (?setPerspective@Camera@@QAEXMMMM@Z) already defined in main.obj
-texture.obj : error LNK2005: "public: void __thiscall Camera::setPosition(struct glm::tvec3<float,0>)" (?setPosition@Camera@@QAEXU?$tvec3@M$0A@@glm@@@Z) already defined in main.obj
-texture.obj : error LNK2005: "public: void __thiscall Camera::updateProjectionViewTransform(void)" (?updateProjectionViewTransform@Camera@@QAEXXZ) already defined in main.obj
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.exe : fatal error LNK1169: one or more multiply defined symbols found
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(108): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.exe
+  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.pdb (Partial PDB)
