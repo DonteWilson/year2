@@ -1,4 +1,36 @@
 ﻿  texture.cpp
 c:\users\donte.wilson.aie\desktop\year2w\textures\textures\texture.cpp(108): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.exe
-  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.pdb (Partial PDB)
+texture.obj : error LNK2005: "void __cdecl stbi__tga_read_rgb16(struct stbi__context *,unsigned char *)" (?stbi__tga_read_rgb16@@YAXPAUstbi__context@@PAE@Z) already defined in PG.obj
+texture.obj : error LNK2005: _stbi_convert_iphone_png_to_rgb already defined in PG.obj
+texture.obj : error LNK2005: _stbi_failure_reason already defined in PG.obj
+texture.obj : error LNK2005: _stbi_hdr_to_ldr_gamma already defined in PG.obj
+texture.obj : error LNK2005: _stbi_hdr_to_ldr_scale already defined in PG.obj
+texture.obj : error LNK2005: _stbi_image_free already defined in PG.obj
+texture.obj : error LNK2005: _stbi_info already defined in PG.obj
+texture.obj : error LNK2005: _stbi_info_from_callbacks already defined in PG.obj
+texture.obj : error LNK2005: _stbi_info_from_file already defined in PG.obj
+texture.obj : error LNK2005: _stbi_info_from_memory already defined in PG.obj
+texture.obj : error LNK2005: _stbi_is_hdr already defined in PG.obj
+texture.obj : error LNK2005: _stbi_is_hdr_from_callbacks already defined in PG.obj
+texture.obj : error LNK2005: _stbi_is_hdr_from_file already defined in PG.obj
+texture.obj : error LNK2005: _stbi_is_hdr_from_memory already defined in PG.obj
+texture.obj : error LNK2005: _stbi_ldr_to_hdr_gamma already defined in PG.obj
+texture.obj : error LNK2005: _stbi_ldr_to_hdr_scale already defined in PG.obj
+texture.obj : error LNK2005: _stbi_load already defined in PG.obj
+texture.obj : error LNK2005: _stbi_load_from_callbacks already defined in PG.obj
+texture.obj : error LNK2005: _stbi_load_from_file already defined in PG.obj
+texture.obj : error LNK2005: _stbi_load_from_memory already defined in PG.obj
+texture.obj : error LNK2005: _stbi_loadf already defined in PG.obj
+texture.obj : error LNK2005: _stbi_loadf_from_callbacks already defined in PG.obj
+texture.obj : error LNK2005: _stbi_loadf_from_file already defined in PG.obj
+texture.obj : error LNK2005: _stbi_loadf_from_memory already defined in PG.obj
+texture.obj : error LNK2005: _stbi_set_flip_vertically_on_load already defined in PG.obj
+texture.obj : error LNK2005: _stbi_set_unpremultiply_on_load already defined in PG.obj
+texture.obj : error LNK2005: _stbi_zlib_decode_buffer already defined in PG.obj
+texture.obj : error LNK2005: _stbi_zlib_decode_malloc already defined in PG.obj
+texture.obj : error LNK2005: _stbi_zlib_decode_malloc_guesssize already defined in PG.obj
+texture.obj : error LNK2005: _stbi_zlib_decode_malloc_guesssize_headerflag already defined in PG.obj
+texture.obj : error LNK2005: _stbi_zlib_decode_noheader_buffer already defined in PG.obj
+texture.obj : error LNK2005: _stbi_zlib_decode_noheader_malloc already defined in PG.obj
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.exe : fatal error LNK1169: one or more multiply defined symbols found
