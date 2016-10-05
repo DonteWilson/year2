@@ -89,7 +89,7 @@ Geo::Geo()
 {
 	CreateDirectory("Info/", nullptr);
 
-	Shaderfiles();
+	//Shaderfiles();
 	//Initialize glfw
 	glfwInit();
 
@@ -218,14 +218,14 @@ void Geo::Draw()
 	//	glDrawElements(GL_TRIANGLE_FAN, 24, GL_UNSIGNED_INT, 0);
 
 	//Plane
-	//glBindVertexArray(m_planeVAO);
-	//glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 5, -5))));
-	//glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(m_planeVAO);
+	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(5, 5, -5))));
+	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_INT, 0);
 
 	////Cube
-	//glBindVertexArray(m_cubeVAO);
-	//glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-25, 0, 0))));
-	//glDrawElements(GL_TRIANGLE_STRIP, 13, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(m_cubeVAO);
+	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-25, 0, 0))));
+	glDrawElements(GL_TRIANGLE_STRIP, 13, GL_UNSIGNED_INT, 0);
 
 	
 	//Sphere
@@ -246,7 +246,7 @@ void Geo::Draw()
 bool Geo::GetShaders()
 {
 	//Store the returned string into a variable
-	std::string vertex = ReadFile("vertshader.txt");
+	std::string vertex = ReadFile("vdefault.txt");
 
 	//Convert to const char* so it can be used in the glShaderSourceFunction
 	const char* vsSource = vertex.c_str();
@@ -292,48 +292,7 @@ bool Geo::GetShaders()
 
 	return true;
 }
-bool Geo::Shaderfiles()
-{
-	//Create default vertShader incase user doesnt have a file to read from at first
-	const char* vsSource = "#version 410\n \
-							layout(location=0) in vec4 position; \
-							layout(location=1) in vec4 colour; \
-							out vec4 vColour; \
-							uniform mat4 projectionViewWorldMatrix; \
-							void main() {vColour = colour; gl_Position = projectionViewWorldMatrix * position; }";
 
-	//Create default fragShader incase user doesnt have a file to read from at first
-	const char* fsSource = "#version 410\n \
-							in vec4 vColour; \
-							out vec4 fragColor; \
-							void main() { fragColor = vColour; }";
-
-	//Create these files
-	std::ofstream vertfile("Info/vdefault.txt");
-	std::ofstream fragfile("Info/fdefault.txt");
-
-	//Vert shader
-	if (vertfile.fail())
-	{
-		std::cout << "Failed to open\n";
-	}
-	else
-	{
-		vertfile << vsSource;
-	}
-
-	//Frag shader
-	if (fragfile.fail())
-	{
-		std::cout << "File failed to open!\n";
-	}
-	else
-	{
-		fragfile << fsSource;
-	}
-
-	return true;
-}
 std::string Geo::ReadFile(const std::string &a_File)
 {
 	std::string data;
@@ -588,3 +547,47 @@ bool Geo::SphereBuffer(const int& radius, const int& np, const int& nMeridians)
 
 	return true;
 }
+
+/*
+bool Geo::Shaderfiles()
+{
+	//Create default vertShader incase user doesnt have a file to read from at first
+	const char* vsSource = "#version 410\n \
+							layout(location=0) in vec4 position; \
+							layout(location=1) in vec4 colour; \
+							out vec4 vColour; \
+							uniform mat4 projectionViewWorldMatrix; \
+							void main() {vColour = colour; gl_Position = projectionViewWorldMatrix * position; }";
+
+	//Create default fragShader incase user doesnt have a file to read from at first
+	const char* fsSource = "#version 410\n \
+							in vec4 vColour; \
+							out vec4 fragColor; \
+							void main() { fragColor = vColour; }";
+
+	//Create these files
+	std::ofstream vertfile("Info/vdefault.txt");
+	std::ofstream fragfile("Info/fdefault.txt");
+
+	//Vert shader
+	if (vertfile.fail())
+	{
+		std::cout << "Failed to open\n";
+	}
+	else
+	{
+		vertfile << vsSource;
+	}
+
+	//Frag shader
+	if (fragfile.fail())
+	{
+		std::cout << "File failed to open!\n";
+	}
+	else
+	{
+		fragfile << fsSource;
+	}
+
+	return true;
+}*/

@@ -1,6 +1,4 @@
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_
-
+#pragma once
 #include "src\Gizmos.h"
 #include "src\gl_core_4_4.h"
 #include <GLFW\glfw3.h>
@@ -22,7 +20,5 @@ public:
 
 
 };
-
-
-#endif 
+ 
 

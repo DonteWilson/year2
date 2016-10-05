@@ -15,7 +15,7 @@ void Camera::setPerspective(float FoV, float aspectRatio, float n, float f)
 
 void Camera::setLookAt(vec3 from, vec3 to, vec3 up)
 {
-	projectionViewTransform = glm::lookAt(from, to, up);
+	viewTransform = glm::lookAt(from, to, up);
 }
 
 void Camera::setPosition(vec3 position)

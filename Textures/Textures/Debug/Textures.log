@@ -1,1 +1,5 @@
-﻿
+﻿  FlyCamera.cpp
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\flycamera.cpp(45): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\donte.wilson.aie\desktop\year2w\textures\textures\flycamera.cpp(46): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.exe
+  Textures.vcxproj -> C:\Users\donte.wilson.AIE\Desktop\year2w\Textures\Debug\Textures.pdb (Partial PDB)

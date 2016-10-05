@@ -70,28 +70,15 @@ bool Textures::update()
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 
-		Gizmos::clear();
-		Gizmos::addTransform(glm::mat4(1));
-		vec4 white(1);
-		vec4 black(0, 0, 0, 1);
-		for (int i = 0; i < 21; ++i) {
-			Gizmos::addLine(vec3(-10 + i, 0, 10),
-				vec3(-10 + i, 0, -10),
-				i == 10 ? white : black);
-			Gizmos::addLine(vec3(10, 0, -10 + i),
-				vec3(-10, 0, -10 + i),
-				i == 10 ? white : black);
-		}
-
 		//update time and camera
 		myCamera->update(m_time * 10.f);
 		m_projectionViewMatrix = myCamera->getProjectionView();
-		Gizmos::draw(m_projectionViewMatrix);
+		
 		
 		return true;
 
 	}
-	Gizmos::destroy();
+	
 	return false;
 
 }
@@ -101,47 +88,66 @@ void Textures::Draw()
 	/*GL_COLOR_BUFFER_BIT informs OpenGL to wipe the back - buffer colours clean.
 	GL_DEPTH_BUFFER_BIT informs it to clear the distance to the closest pixels.If we didn’t do this then
 	OpenGL may think the image of the last frame is still there and our new visuals may not display.*/
+	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	Gizmos::clear();
+	Gizmos::addTransform(glm::mat4(1));
 
-	// bind shader
-	glUseProgram(m_programID);
+	vec4 white(1);
+	vec4 black(0, 0, 0, 1);
+	for (int i = 0; i < 21; ++i) {
+		Gizmos::addLine(vec3(-10 + i, 0, 10),
+			vec3(-10 + i, 0, -10),
+			i == 10 ? white : black);
+		Gizmos::addLine(vec3(10, 0, -10 + i),
+			vec3(-10, 0, -10 + i),
+			i == 10 ? white : black);
+	}
 
-	//// bind the camera
-	int loc = glGetUniformLocation(m_programID, "ProjectionView");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, &(myCamera->getProjectionView()[0][0]));
+	Gizmos::draw(m_projectionViewMatrix);
 
-	// set texture slot
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	
 
-	// set texture slot
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_normalmap);
+	//// bind shader
+	//glUseProgram(m_programID);
+	////// bind the camera
+	//int loc = glGetUniformLocation(m_programID, "ProjectionView");
+	//glUniformMatrix4fv(loc, 1, GL_FALSE, &(myCamera->getProjectionView()[0][0]));
 
-	// tell the shader where it is
-	loc = glGetUniformLocation(m_programID, "diffuse");
-	glUniform1i(loc, 0);
+	//// set texture slot
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	// tell the shader where it is
-	loc = glGetUniformLocation(m_programID, "normal");
-	glUniform1i(loc, 1);
+	//// set texture slot
+	//glActiveTexture(GL_TEXTURE1);
+	//glBindTexture(GL_TEXTURE_2D, m_normalmap);
 
-	vec3 light(sin(glfwGetTime()), 1, cos(glfwGetTime()));
-	loc = glGetUniformLocation(m_programID, "LightDir");
-	glUniform3f(loc, light.x, light.y, light.z);
+	//// tell the shader where it is
+	//loc = glGetUniformLocation(m_programID, "diffuse");
+	//glUniform1i(loc, 0);
+
+	//// tell the shader where it is
+	//loc = glGetUniformLocation(m_programID, "normal");
+	//glUniform1i(loc, 1);
+
+	//vec3 light(sin(glfwGetTime()), 1, cos(glfwGetTime()));
+	//loc = glGetUniformLocation(m_programID, "LightDir");
+	//glUniform3f(loc, light.x, light.y, light.z);
 
 
-	// draw
-	glBindVertexArray(m_vao);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	//// draw
+	//glBindVertexArray(m_vao);
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-	//If we did not call this then we wouldn’t be able to see
-	//anything rendered by us with OpenGL.
+	////If we did not call this then we wouldn’t be able to see
+	////anything rendered by us with OpenGL.
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
 void Textures::Terminate()
 {
+	Gizmos::destroy();
 	// cleanup render data
 	glDeleteProgram(m_programID);
 
@@ -176,7 +182,7 @@ bool Textures::GLInitWindow()
 	//Initilaize the camera
 	myCamera = new FlyCamera;
 
-	myCamera->setLookAt(vec3(10, 10, 10), vec3(0), vec3(0, 1, 0));
+	myCamera->setLookAt(vec3(10, 15, 10), vec3(0), vec3(0, 1, 0));
 	myCamera->setPerspective(glm::pi<float>() * 0.35f, 16 / 9.f, 0.1f, 1000.f);
 
 	//Set matrix

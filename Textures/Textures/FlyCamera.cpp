@@ -4,11 +4,16 @@
 FlyCamera::FlyCamera()
 {
 	Click = true;
-	setLookAt(glm::vec3(10.f, 10.f, 10.f), glm::vec3(0.f, 0.f, -1.0f), up);
-	setPerspective(glm::pi<float>() * 0.35f, 16 / 9.f, 0.1f, 1000.f);
+	//Create the view matrix
+	
 	up = glm::vec3(0.0f, 1.0f, 0.0f);
+	//Set matrix
+	setLookAt(glm::vec3(10.f, 15.f, 10.f), glm::vec3(0.f, 0.f, 0.0f), up);
+	setPerspective(glm::pi<float>() * 0.35f, 16 / 9.f, 0.1f, 1000.f);
+	
 	prevX = 0;
 	prevY = 0;
+
 }
 
 void FlyCamera::update(float deltaTime)
@@ -40,8 +45,8 @@ void FlyCamera::update(float deltaTime)
 		float offsetX = prevX - x;
 		float offSetY = prevY - y;
 
-		offsetX += 0.005f;
-		offSetY += 0.005f;
+		offsetX *= 0.005f;
+		offSetY *= 0.005f;
 
 		if (offsetX < 1 || offsetX > 1)
 		{
@@ -71,7 +76,7 @@ void FlyCamera::update(float deltaTime)
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		Transform = glm::translate(vec3(0, 0, (-0.10f * deltaTime) * 10));
+		Transform = glm::translate(vec3((-0.10f * deltaTime) * 10, 0, 0));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{

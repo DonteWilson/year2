@@ -64,7 +64,7 @@ private:
 	std::string ReadFile(const std::string &a_File);
 	Vertex* DrawHalfCircle(const int &np, const int &radius);
 	bool GetShaders();
-	bool Shaderfiles();
+	//bool Shaderfiles();
 	bool CreateBuffers();
 
 };
