@@ -9,7 +9,7 @@ PG::PG()
 
 	GLInitWindow();
 	
-	CreateShaders();
+	ShaderFiles();
 
 	glClearColor(0.25f, 0.25f, 0.25f, 1);
 	glEnable(GL_DEPTH_TEST); // enables the depth buffer
@@ -47,7 +47,7 @@ bool PG::create()
 	stbi_image_free(perlin_data);
 
 	//rocks
-	unsigned char* data = stbi_load("./data/textures/rocky_ground.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
+	unsigned char* data = stbi_load("./textures/rocky_ground.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
 
 	glGenTextures(1, &m_rocks);
 	glBindTexture(GL_TEXTURE_2D, m_rocks);
@@ -58,7 +58,7 @@ bool PG::create()
 	stbi_image_free(data);
 
 	//grass
-	data = stbi_load("./data/textures/dirt_grass.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
+	data = stbi_load("./textures/dirt_grass.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
 	glGenTextures(1, &m_grass);
 	glBindTexture(GL_TEXTURE_2D, m_grass);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -68,7 +68,7 @@ bool PG::create()
 	stbi_image_free(data);
 
 	//gravel
-	data = stbi_load("./data/textures/gravel.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
+	data = stbi_load("./textures/gravel.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
 	glGenTextures(1, &m_gravel);
 	glBindTexture(GL_TEXTURE_2D, m_gravel);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -77,6 +77,8 @@ bool PG::create()
 
 	stbi_image_free(data);
 
+	PlaneBuffers(dims, dims);
+	CreateShaders();
 	
 
 
@@ -143,13 +145,13 @@ void PG::Draw()
 bool PG::CreateShaders()
 {
 	//Store the returned string into a variable
-	std::string vertex = ReadFile("vertText.txt");
+	std::string vertex = ReadFile("vertshader.txt");
 
 	//Convert to const char* so it can be used in the glShaderSourceFunction
 	const char* vsSource = vertex.c_str();
 
 	//Store the returned string into a variable
-	std::string fragment = ReadFile("fragText.txt");
+	std::string fragment = ReadFile("fragshader.txt");
 
 	//Convert to const char* so it can be used in the glShaderSourceFunction
 	const char* fsSource = fragment.c_str();

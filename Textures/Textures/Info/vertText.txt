@@ -11,10 +11,10 @@ out vec3 vBiTangent;
 
 uniform mat4 ProjectionView;
 void main() {
-//vTexCoord = TexCoord;
-//vNormal = Normal.xyz;
-//vTangent = Tangent.xyz;
-//vBiTangent = cross(vNormal, vTangent);
+vTexCoord = TexCoord;
+vNormal = Normal.xyz;
+vTangent = Tangent.xyz;
+vBiTangent = cross(vNormal, vTangent);
 
 gl_Position = ProjectionView * Position;
 };

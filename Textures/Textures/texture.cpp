@@ -1,7 +1,7 @@
 #include "textures.h"
 #include <fstream>
 #include <iostream>
-#include "stb_image.h"
+#include <stb_image.h>
 #include "src\Gizmos.h"
 
 
@@ -26,7 +26,7 @@ bool Textures::create()
 {
 
 	Gizmos::create();
-	int imageWidth = 0, imageHeight = 0, imageFormat = 0;
+	int imageWidth = 512, imageHeight = 512, imageFormat = 0;
 	//"./data/textures/crate.png"
 	unsigned char* data = stbi_load("./textures/rock_diffuse.tga",
 		&imageWidth, &imageHeight, &imageFormat, STBI_default);
@@ -34,8 +34,7 @@ bool Textures::create()
 
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight,
-		0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight,0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -57,6 +56,7 @@ bool Textures::create()
 	GetShaders();
 
 	PlaneBuffer();
+	//PlaneBuffer2();
 	m_lastFrame = 0.0f;
 	return true;
 }
@@ -109,36 +109,36 @@ void Textures::Draw()
 
 	
 
-	//// bind shader
-	//glUseProgram(m_programID);
-	////// bind the camera
-	//int loc = glGetUniformLocation(m_programID, "ProjectionView");
-	//glUniformMatrix4fv(loc, 1, GL_FALSE, &(myCamera->getProjectionView()[0][0]));
+	// bind shader
+	glUseProgram(m_programID);
+	//// bind the camera
+	int loc = glGetUniformLocation(m_programID, "ProjectionView");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, &(myCamera->getProjectionView()[0][0]));
 
-	//// set texture slot
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, m_texture);
+	// set texture slot
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	//// set texture slot
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, m_normalmap);
+	// set texture slot
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_normalmap);
 
-	//// tell the shader where it is
-	//loc = glGetUniformLocation(m_programID, "diffuse");
-	//glUniform1i(loc, 0);
+	// tell the shader where it is
+	loc = glGetUniformLocation(m_programID, "diffuse");
+	glUniform1i(loc, 0);
 
-	//// tell the shader where it is
-	//loc = glGetUniformLocation(m_programID, "normal");
-	//glUniform1i(loc, 1);
+	// tell the shader where it is
+	loc = glGetUniformLocation(m_programID, "normal");
+	glUniform1i(loc, 1);
 
-	//vec3 light(sin(glfwGetTime()), 1, cos(glfwGetTime()));
-	//loc = glGetUniformLocation(m_programID, "LightDir");
-	//glUniform3f(loc, light.x, light.y, light.z);
+	vec3 light(sin(glfwGetTime()), 1, cos(glfwGetTime()));
+	loc = glGetUniformLocation(m_programID, "LightDir");
+	glUniform3f(loc, light.x, light.y, light.z);
 
 
-	//// draw
-	//glBindVertexArray(m_vao);
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	// draw
+	glBindVertexArray(m_vao);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
 	////If we did not call this then we wouldn’t be able to see
 	////anything rendered by us with OpenGL.
@@ -270,7 +270,7 @@ std::string Textures::ReadFile(const std::string &a_File)
 bool Textures::Shaderfiles()
 {
 	//Create default vertShader incase user doesnt have a file to read from at first
-	const char* vertShader = "#version 410\n \
+	const char* vsSource = "#version 410\n \
 									 layout(location=0) in vec4 Position; \
 									 layout(location=1) in vec2 TexCoord; \
 									 layout(location=2) in vec4 Normal; \
@@ -287,7 +287,7 @@ bool Textures::Shaderfiles()
 									 gl_Position = ProjectionView * Position; }";
 
 	//Create default fragShader incase user doesnt have a file to read from at first
-	const char* fragShader = "#version 410\n \
+	const char* fsSource = "#version 410\n \
 									in vec2 vTexCoord; \
 									in vec3 vNormal; \
 									in vec3 vTangent; \
@@ -320,7 +320,7 @@ bool Textures::Shaderfiles()
 	}
 	else
 	{
-		vertfile << vertShader;
+		vertfile << vsSource;
 	}
 
 	//Frag shader
@@ -330,7 +330,7 @@ bool Textures::Shaderfiles()
 	}
 	else
 	{
-		fragfile << fragShader;
+		fragfile << fsSource;
 	}
 
 	return true;
@@ -346,6 +346,56 @@ bool Textures::PlaneBuffer()
 		{ 5, 0, 5, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1 },
 		{ 5, 0, -5, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0 },
 		{ -5, 0, -5, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
+	};
+
+	unsigned int indexData[] = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+
+	glGenVertexArrays(1, &m_vao);
+	glBindVertexArray(m_vao);
+
+	glGenBuffers(1, &m_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4,
+		vertexData, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6,
+		indexData, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), 0);
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), ((char*)0) + 48);
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), ((char*)0) + 16);
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE,
+		sizeof(Vertex), ((char*)0) + 32);
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return true;
+}
+bool Textures::PlaneBuffer2()
+{
+	//Texture Mapping
+	Vertex vertexData[] = {
+		{ -10, 0, 10, 5, 0, 5, 0, 0, 5, 0, 0, 0, 0, 5 },
+		{ 10, 0, 10, 5, 0, 5, 0, 0, 5, 0, 0, 0, 5, 5 },
+		{ 10, 0, -10, 5, 0, 5, 0, 0, 5, 0, 0, 0, 5, 0 },
+		{ -10, 0, -5, 5, 0, 5, 0, 0, 5, 0, 0, 0, 0, 0 },
 	};
 
 	unsigned int indexData[] = {

@@ -50,6 +50,7 @@ private:
 	float m_lastFrame;
 
 	bool PlaneBuffer();
+	bool PlaneBuffer2();
 	bool GLInitWindow();
 	std::string ReadFile(const std::string &a_File);
 	Vertex* DrawHalfCircle(const int &np, const int &radius);
