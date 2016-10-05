@@ -1,25 +1,25 @@
 #include <iostream>
 #include "Application.h"
-//#include "textures.h"
-#include "PG.h"
+#include "textures.h"
+//#include "PG.h"
 
 
 int main()
 {
 	//Creates a texture instance
-	Application* pg = new PG();
+	Application* textures = new Textures();
 	//	Application* app = new RenderingGeometry();
 
 	//Checks to see if create bool is set to true, then run functions
-	if (pg->create() == true)
+	if (textures->create() == true)
 	{
 		//while update is true then the programw will run the draw function
-		while (pg->update() == true)
-			pg->Draw();
-		pg->Terminate();
+		while (textures->update() == true)
+			textures->Draw();
+		textures->Terminate();
 	}
 
-	delete pg;
+	delete textures;
 
 
 

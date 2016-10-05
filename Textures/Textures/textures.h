@@ -2,16 +2,9 @@
 #define TEXTURES_H_
 
 #include <iostream>
-#include "src/Gizmos.h"
-#include "src/gl_core_4_4.h"
-#include <GLFW/glfw3.h>
-#include <glm.hpp>
-#include <ext.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtx/transform.hpp>
-#include <vector>
 #include "Application.h"
-#include "Camera.h"
+#include "FlyCamera.h"
+
 
 //Geometry Tutorial
 /*
@@ -26,9 +19,10 @@ using glm::vec4;
 
 struct Vertex
 {
-	vec4 position;
-	vec4 colour;
-
+	float x, y, z, w;
+	float nx, ny, nz, nw;
+	float tx, ty, tz, tw;
+	float s, t;
 };
 class Textures : public Application
 {
@@ -50,7 +44,7 @@ private:
 	unsigned int m_fragmentShader;
 	unsigned int m_vao, m_vbo, m_ibo;
 	unsigned int m_programID;
-	unsigned int m_texture;
+	unsigned int m_texture, m_normalmap;
 	unsigned int m_program;
 	float m_time;
 	float m_lastFrame;

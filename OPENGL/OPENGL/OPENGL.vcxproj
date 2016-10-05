@@ -140,6 +140,11 @@
     <Text Include="Info\vdefault.txt" />
     <Text Include="Info\vertshader.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="Debug\Geo.obj" />
+    <Object Include="Debug\Gizmos.obj" />
+    <Object Include="Debug\gl_core_4_4.obj" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

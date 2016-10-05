@@ -134,6 +134,10 @@
     <ClInclude Include="src\gl_core_4_4.h" />
     <ClInclude Include="textures.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Info\fragText.txt" />
+    <Text Include="Info\vertText.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

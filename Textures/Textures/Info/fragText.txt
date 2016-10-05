@@ -15,4 +15,5 @@ vec3 N = texture(normal,vTexCoord).xyz * 2 - 1;
 float d = max(0,dot(normalize(TBN * N), normalize(LightDir)));
 FragColor = texture(diffuse, vTexCoord);
 FragColor.rgb = FragColor.rgb * d;
+FragColor = vec4(1,1,1,1);
 }
