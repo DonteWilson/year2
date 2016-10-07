@@ -44,7 +44,7 @@ bool PG::create()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	stbi_image_free(perlin_data);
+	//stbi_image_free(perlin_data);
 
 	//rocks
 	unsigned char* data = stbi_load("./textures/rocky_ground.tga", &imageWidth, &imageHeight, &imageFormat, STBI_default);
@@ -161,9 +161,9 @@ bool PG::CreateShaders()
 	m_vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	m_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	glShaderSource(m_vertexShader, 1, (const char**)&vsSource, nullptr);
+	glShaderSource(m_vertexShader, 1, (const char**)&vsSource, 0);
 	glCompileShader(m_vertexShader);
-	glShaderSource(m_fragmentShader, 1, (const char**)&fsSource, nullptr);
+	glShaderSource(m_fragmentShader, 1, (const char**)&fsSource, 0);
 	glCompileShader(m_fragmentShader);
 	//..
 
@@ -250,7 +250,7 @@ bool PG::PlaneBuffers(const int& width, const int& height)
 bool PG::ShaderFiles()
 {
 	//Create default vertShader incase user doesnt have a file to read from at first
-	const char* vsSource = "#version 410\n \
+	const char* vertShader = "#version 410\n \
 							layout(location=0) in vec4 position; \
 							layout(location=1) in vec4 colour; \
 							out vec4 vColour; \
@@ -258,7 +258,7 @@ bool PG::ShaderFiles()
 							void main() {vColour = colour; gl_Position = projectionViewWorldMatrix * position; }";
 
 	//Create default fragShader incase user doesnt have a file to read from at first
-	const char* fsSource = "#version 410\n \
+	const char* fragShader = "#version 410\n \
 							in vec4 vColour; \
 							out vec4 fragColor; \
 							void main() { fragColor = vColour; }";
@@ -274,7 +274,7 @@ bool PG::ShaderFiles()
 	}
 	else
 	{
-		vertfile << vsSource;
+		vertfile << vertShader;
 	}
 
 	//Frag shader
@@ -284,7 +284,7 @@ bool PG::ShaderFiles()
 	}
 	else
 	{
-		fragfile << fsSource;
+		fragfile << fragShader;
 	}
 
 	return true;

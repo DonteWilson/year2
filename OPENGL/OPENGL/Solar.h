@@ -3,7 +3,9 @@
 
 
 
-#include "Application.h"
+#include "Headers/Application.h"
+#include "Headers/Camera.h"
+#include <GLFW/glfw3.h>
 
 using glm::vec3;
 using glm::vec4;
@@ -14,13 +16,16 @@ class Solar : public Application
 
 public:
 	Solar();
-	bool Create() override;
+	bool create() override;
 	void Terminate() override;
 	void Draw() override;
-	bool Update() override;
+	bool update() override;
 
 private:
-
+	Camera* myCamera;
+	float m_time;
+	unsigned int m_programID;
+	glm::mat4 m_projectionViewMatrix;
 	mat4 sun;
 	mat4 earth;
 	mat4 venus;
@@ -29,6 +34,8 @@ private:
 	mat4 view;
 	mat4 projection;
 	GLFWwindow* window;
+
+	bool GLInitWindow();
 
 
 

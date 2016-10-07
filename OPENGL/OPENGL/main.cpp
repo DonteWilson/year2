@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Headers/Application.h"
 #include "Geo.h"
+//#include "Solar.h"
 
 
 int main()

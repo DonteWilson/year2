@@ -41,10 +41,12 @@ public:
 private:
 
 	GLFWwindow* window;
+
 	glm::mat4 m_projectionViewMatrix;
 	unsigned int m_projectionViewUniform;
 	unsigned int m_vertexShader;
 	unsigned int m_fragmentShader;
+	unsigned int* SphereIndicies(const unsigned int &vertices, const unsigned int &miridian);
 	unsigned int m_sphereVBO, m_sphereIBO, m_sphereVAO;
 	unsigned int m_circleVBO, m_circleIBO, m_circleVAO;
 	unsigned int m_planeVBO, m_planeIBO, m_planeVAO;
@@ -62,7 +64,9 @@ private:
 
 
 	std::string ReadFile(const std::string &a_File);
+	std::vector<unsigned int> indicesbox;
 	Vertex* DrawHalfCircle(const int &np, const int &radius);
+	Vertex* SphereVerts(const unsigned int &sides, const unsigned int &meridian, Vertex* &halfSphere);
 	bool GetShaders();
 	//bool Shaderfiles();
 	bool CreateBuffers();

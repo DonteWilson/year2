@@ -231,7 +231,7 @@ void Geo::Draw()
 	//Sphere
 	glBindVertexArray(m_sphereVAO);
 	glUniformMatrix4fv(m_projectionViewUniform, 1, false, glm::value_ptr(m_projectionViewMatrix * glm::translate(vec3(-15, -5, 5))));
-	glDrawElements(GL_LINE_LOOP, sElements , GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLE_STRIP, sElements , GL_UNSIGNED_INT, nullptr);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -473,45 +473,13 @@ bool Geo::SphereBuffer(const int& radius, const int& np, const int& nMeridians)
 {
 	
 	//Set this so the number of elements to draw will be correct
-	sElements = np * nMeridians;
+	const unsigned int amount = np * nMeridians;
+	Vertex* vertices = new Vertex[amount];
+	unsigned int* indices;
 
-	//Indices array
-	unsigned int* indices = new unsigned int[sElements];
-
-	//Set up indices count
-	for (unsigned int i = 0; i < sElements; i++)
-	{
-		indices[i] = i;
-	}
-
-	//Create original verts, the half circle
-	Vertex* Verts = DrawHalfCircle(np, 5);
-
-	//Set up a counter to start at that index of the vertices array so we can set the 
-	//respective vertex with meridian points
-	unsigned int counter = 0;
-
-	//create total verts for spehere
-	Vertex* vertices = new Vertex[sElements];
-
-	//Loop through meridians
-	for (int i = 0; i < nMeridians; i++)
-	{//Get the angle
-		double phi = 2 * 3.14159265359 * i / (nMeridians - 1);
-		//Loop through the number of points and increase the counter each time
-		for (int j = 0; j < np; j++, counter++)
-		{//Create X variable for the current x position of Verts
-			double X = Verts[j].position.x;
-			//Create Y variable for the current y position of Verts * cos(phi) - the current z position of Verts * sin(phi)
-			double Y = Verts[j].position.y * cos(phi) - Verts[j].position.z * sin(phi);
-			//Create Z variable for the current z position of Verts * cos(phi) + the current y position of Verts * sin(phi)
-			double Z = Verts[j].position.z * cos(phi) + Verts[j].position.y * sin(phi);
-
-			//Set the appropriate values per vertex
-			vertices[counter].position = vec4(X, Y, Z, 1);
-		}
-	}
-
+	Vertex* newVerts = DrawHalfCircle(np, radius);
+	vertices = SphereVerts(np, nMeridians, newVerts);
+	indices = SphereIndicies(np, nMeridians);
 	// generate buffers
 	glGenBuffers(1, &m_sphereVBO);
 	glGenBuffers(1, &m_sphereIBO);
@@ -547,47 +515,53 @@ bool Geo::SphereBuffer(const int& radius, const int& np, const int& nMeridians)
 
 	return true;
 }
-
-/*
-bool Geo::Shaderfiles()
+unsigned* Geo::SphereIndicies(const unsigned int & np, const unsigned int & nMeridian)
 {
-	//Create default vertShader incase user doesnt have a file to read from at first
-	const char* vsSource = "#version 410\n \
-							layout(location=0) in vec4 position; \
-							layout(location=1) in vec4 colour; \
-							out vec4 vColour; \
-							uniform mat4 projectionViewWorldMatrix; \
-							void main() {vColour = colour; gl_Position = projectionViewWorldMatrix * position; }";
+	unsigned int* indices = new unsigned int[2 * (np *(nMeridian + 1))];
+	sElements = 2 * (np * (nMeridian + 1));
 
-	//Create default fragShader incase user doesnt have a file to read from at first
-	const char* fsSource = "#version 410\n \
-							in vec4 vColour; \
-							out vec4 fragColor; \
-							void main() { fragColor = vColour; }";
-
-	//Create these files
-	std::ofstream vertfile("Info/vdefault.txt");
-	std::ofstream fragfile("Info/fdefault.txt");
-
-	//Vert shader
-	if (vertfile.fail())
+	for (unsigned int i = 0; i < nMeridian; i++)
 	{
-		std::cout << "Failed to open\n";
-	}
-	else
-	{
-		vertfile << vsSource;
+		unsigned int start = i * np;
+		for(int j = 0; j < np; j++)
+		{
+			unsigned int br = ((start + np + j) % (np * nMeridian));
+			unsigned int bl = ((start + j) % (np * nMeridian));
+			indicesbox.push_back(br);
+			indicesbox.push_back(bl);
+		}
 	}
 
-	//Frag shader
-	if (fragfile.fail())
+	for (int i = 0; i < indicesbox.size(); i++)
 	{
-		std::cout << "File failed to open!\n";
-	}
-	else
-	{
-		fragfile << fsSource;
+		indices[i] = indicesbox[i];
 	}
 
-	return true;
-}*/
+	return indices;
+}
+
+Vertex* Geo::SphereVerts(const unsigned int& np, const unsigned int& nMeridian, Vertex*& halfSphere)
+{
+	//contains the number of indices
+	unsigned int counter = 0;
+
+	//creates a new instance of the vertex by the number of points times the number of meridians
+	Vertex* vertices = new Vertex[np * nMeridian];
+
+	for(int i = 0; i < nMeridian; i++)
+	{
+		//Sets the definition of phi
+		float phi = 2 * 3.14159265359 * ((float)i / (float)(nMeridian));
+
+		for (int j = 0; j < np; j++, counter++)
+		{//Gives the definition of the X, Y, Z
+			float X = halfSphere[j].position.x;
+			float Y = halfSphere[j].position.y * cos(phi) - halfSphere[j].position.z * sin(phi);
+			float Z = halfSphere[j].position.z * cos(phi) + halfSphere[j].position.y * sin(phi);
+
+			vertices[counter].position = vec4(X, Y, Z, 1);
+		}
+	}
+	return vertices;
+}
+

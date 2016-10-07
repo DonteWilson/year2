@@ -1,10 +1,20 @@
 #version 410
 
-layout(location=0) in vec4 Position; 
-layout(location=1) in vec2 TexCoord; 
-out vec2 vTexCoord; 
-uniform mat4 ProjectionView; 
-void main() { 
-vTexCoord = TexCoord; 
-gl_Position= ProjectionView * Position;
+layout(location=0) in vec4 position;
+layout(location=1) in vec2 texcoords
+out vec2 Texcoords;
+
+uniform mat4 projectionViewWorldMatrix;
+uniform float Time;
+
+uniform sampler2D perlin_texture;
+
+void main()
+{
+	vec4 pos = position;
+
+	pos.y += texture(perlin_texture, texcoords).r * 5;
+
+	vTexcoords = texcoords;
+	gl_Position = projectionViewWorldMatrix * pos;
 };
