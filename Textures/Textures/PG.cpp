@@ -38,7 +38,7 @@ bool PG::create()
 	stbi_image_free(perlin_data);
 
 	//rocks
-	unsigned char* data = stbi_load("./textures/rocky_ground.tga",
+	unsigned char* data = stbi_load("./textures/rocky_diffuse.tga",
 		&imageWidth, &imageHeight, &imageFormat, STBI_default);
 
 	glGenTextures(1, &m_rocks);
@@ -51,8 +51,8 @@ bool PG::create()
 
 	stbi_image_free(data);
 
-	//gravel
-	data = stbi_load("./textures/gravel.tga",
+	//dirt
+	data = stbi_load("./textures/dirt2.tga",
 		&imageWidth, &imageHeight, &imageFormat, STBI_default);
 	glGenTextures(1, &m_gravel);
 	glBindTexture(GL_TEXTURE_2D, m_gravel);
@@ -63,8 +63,8 @@ bool PG::create()
 
 	stbi_image_free(data);
 
-	//grass
-	data = stbi_load("./textures/dirt_grass.tga",
+	//dirt
+	data = stbi_load("./textures/dirt.tga",
 		&imageWidth, &imageHeight, &imageFormat, STBI_default);
 	glGenTextures(1, &m_grass);
 	glBindTexture(GL_TEXTURE_2D, m_grass);
@@ -82,9 +82,7 @@ bool PG::create()
 	return true;
 }
 
-///<summary>
-///Function that handles the window staying open and camera update
-///</summary>
+//Procedural Generation update 
 bool PG::update()
 {
 	float currentFrame = glfwGetTime();
@@ -324,9 +322,7 @@ std::string PG::ReadFile(const std::string &a_File)
 	return contents;
 }
 
-///<summary>
-///Function that creates default shader files
-///</summary>
+
 bool PG::ShaderFiles()
 {
 	//Create default vertShader incase user doesnt have a file to read from at first

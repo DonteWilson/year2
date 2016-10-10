@@ -4,41 +4,30 @@
 
 
 #include "Headers/Application.h"
-#include "Headers/Camera.h"
 #include <GLFW/glfw3.h>
 
 using glm::vec3;
 using glm::vec4;
 using glm::mat4;
 
+//solar system class. everything is public. inherits from app class.
 class Solar : public Application
 {
-
 public:
 	Solar();
+	float angle = 0.0f;
 	bool create() override;
-	void Terminate() override;
-	void Draw() override;
 	bool update() override;
+	void Draw() override;
+	void Terminate() override;
 
-private:
-	Camera* myCamera;
-	float m_time;
-	unsigned int m_programID;
-	glm::mat4 m_projectionViewMatrix;
-	mat4 sun;
-	mat4 earth;
-	mat4 venus;
-	mat4 moon;
-	mat4 jupiter;
-	mat4 view;
-	mat4 projection;
 	GLFWwindow* window;
-
-	bool GLInitWindow();
-
-
-
+	vec4 white, black, yellow, blue, brownish;
+	mat4 view, projection;
+	mat4 sun, earth, moon, jupiter = mat4(1); 
+	vec3 translate1 = glm::vec3(4, 0, 0);       
+	vec3 translate2 = glm::vec3(2, 0, 0);       
+	       
 };
 
 
