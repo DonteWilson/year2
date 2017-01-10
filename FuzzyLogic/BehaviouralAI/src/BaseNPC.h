@@ -1,6 +1,7 @@
 #ifndef BASE_NPC_H_
 #define BASE_NPC_H_
 
+
 #include <glm/glm.hpp>
 
 class World;
