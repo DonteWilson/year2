@@ -54,7 +54,7 @@ class UtilityNPC : public BaseNPC
 			m_pUtilityScoreMap["collectFood"] = pFoodScore;
 
 			UtilityScore* pTreeScore = new UtilityScore();
-			pTreeScore->addUtilityValue(&m_treeValue, 1.0f);
+			pTreeScore->addUtilityValue(&m_treeValue, 2.0f);
 			m_pUtilityScoreMap["chopTree"] = pTreeScore;
 
 			UtilityScore* pRestScore = new UtilityScore();
