@@ -8,6 +8,11 @@ for string in inFile:
 		ors = 0;
 		nots = 0;
 		ands = 0;
+		a = 1;
+		b = 1;
+		c = 1;
+		e = 1;
+		f = 1;
 				
 		for char in string:
 			if char == '!':
@@ -41,7 +46,6 @@ for string in inFile:
 		literals.sort();
 		print(string);
 		print('Literals: ', literals);
-		
 		print('Amount of Nots: ',nots);
 		print('Amount of Ands:' ,ands);
 		print('Amount of Ors: ',ors);
