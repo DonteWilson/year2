@@ -43,3 +43,28 @@ class Cdate(object):
 	
 	
 	def Evaluate(self, clauses, literals, value):
+		tempString = ""
+		clauses = []
+		chroeval = 0
+		for string in expression:
+			for char in string:
+				if char == ')':
+					tempString += char
+					clauses.append(tempString)
+					tempString = ""
+				
+				elif char == '&':
+					continue
+				
+				else:
+					if char != '-' and char != '(' and char != '|' and char != '&':
+						tempString += can.value[MyIndex(literals, char)]
+					
+					else:
+						tempString += char
+		
+		finalString = ""
+		swap = 0
+		for string in clauses:
+		
+	
