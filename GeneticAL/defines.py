@@ -66,5 +66,6 @@ class Cdate(object):
 		finalString = ""
 		swap = 0
 		for string in clauses:
+			
 		
 	
