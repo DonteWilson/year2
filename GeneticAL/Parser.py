@@ -1,3 +1,7 @@
+import defines
+from defines import *
+import random
+
 file = "CNFexpress.txt"
 inFile = open(file, 'r')
 for string in inFile:
