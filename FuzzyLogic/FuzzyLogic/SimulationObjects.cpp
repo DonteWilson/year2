@@ -327,6 +327,159 @@ void Agent::update(float delta)
 	}
 }
 
+Predator::Predator(glm::vec2 position) : BaseAgent(position, glm::vec4(1, 1, 0, 1), 20)
+{
+	follow = 0;
+	type = PREDATOR;
+	maxSpeed = 150;
+}
+
+void Predator::draw()
+{
+	BaseAgent::draw();
+}
+
+float Predator::checkTargetDesireable()
+{
+	float desire = 0;
+	float playerRange = findNearestResource(SIMPLE_AI);
+
+	//are we listening
+	float listen = fuzzyEngine.sense->getMembership(follow);
+	//are we wanting to stalk
+	float stalk = fuzzyEngine.predator->getMembership(follow);
+	//are we attacking
+	float attack = fuzzyEngine.hunt->getMembership(follow);
+	//how close are we to player...
+	float playerRangeClose = fuzzyEngine.veryNear->getMembership(playerRange);
+	float playerRangeMedium = fuzzyEngine.mediumRange->getMembership(playerRange);
+	float playerRangeFar = fuzzyEngine.farAway->getMembership(playerRange);
+	//is this a very desirable action?
+	float veryDesirableValue = Fuzzy::OR(Fuzzy::AND(playerRangeClose, stalk), attack);
+	//is it a desirable action?
+	float desirableValue = Fuzzy::AND(Fuzzy::NOT(playerRangeFar), stalk);
+	//is in undesirable?  In this case if we are full it's undesirable
+	float undesirableValue = listen;
+	//set up our maximum values ready to defuzzify
+	float maxVeryDesirable = fuzzyEngine.veryDesirable->getMaxMembership();
+	float maxDesirable = fuzzyEngine.desirable->getMaxMembership();
+	float maxUndesirable = fuzzyEngine.undesirable->getMaxMembership();
+	//defuzzify
+	desire = maxVeryDesirable*veryDesirableValue + maxDesirable* desirableValue + maxUndesirable*undesirableValue;
+	desire /= (.1f + veryDesirableValue + desirableValue + undesirableValue);
+	//return our final desire
+	//cout << desire << endl;
+	return desire;
+}
+
+float Predator::findNearestTarget(WorldObjectType type)
+{
+	float minDistance = 1000000;
+	for (auto object : *worldObjects)
+	{
+		if (object->type == type)
+		{
+			float distance = glm::length(object->position - position);
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+			}
+		}
+	}
+	return minDistance;
+}
+
+glm::vec2 Predator::findTargetVector(WorldObjectType type)
+{
+	float minDistance = 1000000;
+	glm::vec2 target;
+	for (auto object : *worldObjects)
+	{
+		if (object->type == type)
+		{
+			float distance = glm::length(object->position - position);
+			if (distance < minDistance)
+			{
+				minDistance = distance;
+				target = object->position;
+			}
+		}
+	}
+	glm::vec2 vector;
+	if (minDistance<1)
+	{
+		vector = glm::vec2(0, 0);
+	}
+	else
+	{
+		vector = (target - position) / minDistance;
+	}
+	return vector;
+}
+
+glm::vec2 Predator::gotoAgentTarget(float desirability, float delta)
+{
+	glm::vec2 velocity = findTargetVector(SIMPLE_AI) * delta * (1 + desirability) * maxSpeed;
+	return velocity;
+}
+
+void Predator::update(float delta)
+{
+	float targetDesirability = checkTargetDesireable();
+	cout << "targetdesireability: " << targetDesirability << ".";
+	glm::vec2 velocity;
+	float mag;
+
+	for (auto object : *worldObjects)
+	{
+		if (object->type == WorldObjectType::SIMPLE_AI)
+		{
+			glm::vec2 displacement = object->position - this->position;
+			mag = glm::length(displacement);
+		}
+	}
+
+	if (targetDesirability > 0.7)
+	{
+		this->maxSpeed = 100;
+		velocity = gotoAgentTarget(targetDesirability, delta);
+	}
+	else if (targetDesirability < 0.7)
+	{
+		this->maxSpeed = 150;
+		velocity = glm::vec2(0, 0);
+	}
+
+	position += velocity;
+
+	if (mag < 300 && mag > 51)
+	{
+		follow += delta * .3f;
+	}
+	else
+	{
+		follow -= delta * .3f;
+	}
+
+	/*if (findNearestResource(SIMPLE_AI) > 100)
+	{
+	follow -= delta * .3f;
+	}
+	else
+	{
+	follow += delta *.3f;
+	}*/
+
+	if (follow < 0)
+	{
+		follow = 0;
+	}
+	if (follow > 1)
+	{
+		follow = 1;
+	}
+}
+
 void WorldController::update(float delta)
 {
 	for(auto worldObject:worldObjects)

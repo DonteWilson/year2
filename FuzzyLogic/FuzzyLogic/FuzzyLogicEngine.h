@@ -78,6 +78,10 @@ public:
 	TriangleFunction* desirable;
 	rightShoulderMembershipFunction* veryDesirable;
 
+	leftShoulderMembershipFunction* sense;
+	TrapezoidFunction* predator;
+	rightShoulderMembershipFunction* hunt;
+
 	//fuzzy operators
 	static float AND(float f1,float f2);
 	static float OR(float f1,float f2);
