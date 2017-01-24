@@ -2,8 +2,8 @@ import random
 
 def MyIndex(list, case):
 	int = 0
-	for items in list:
-		if items == case:
+	for item in list:
+		if item == case:
 			return int;
 		
 		else:
@@ -41,6 +41,14 @@ class Cdate(object):
 			bitstring += bit
 		self.value = bitstring
 	
+	def Swap(self, literals, value):
+		for bit in range(len(lierals) / 2, len(literals)):
+			if value[bit] == '0':
+				value[bit - (len(literals) / 2)] = '1'
+			elif value[bit] == '1':
+				value[bit - (len(literals) / 2)] = '0'
+		return value
+	
 	def Mutation(self, mChance):
 		finalList = []
 		bitstring = ""
@@ -50,14 +58,14 @@ class Cdate(object):
 					finalList.append('0')
 				elif bit == '0':
 					finalList.append('1')
-				else:
+			else:
 					finalList.append(bit)
 		for bit in finalList:
 			bitstring += bit
 		return bitstring
 	
 	
-	def Evaluate(self, clauses, literals, value):
+	def Evaluate(self, expression, literals, can):
 		tempInfo = ""
 		clauses = []
 		chroeval = 0
@@ -65,7 +73,7 @@ class Cdate(object):
 			for char in string:
 				if char == ')':
 					tempInfo += char
-					clauses.append(tempString)
+					clauses.append(tempInfo)
 					tempInfo = ""
 				
 				elif char == '&':
@@ -73,8 +81,7 @@ class Cdate(object):
 				
 				else:
 					if char != '-' and char != '(' and char != '|' and char != '&':
-						tempInfo += can.value[MyIndex(literals, char)]
-					
+						tempInfo += can.value[MyIndex(literals, char)]					
 					else:
 						tempInfo += char
 		
@@ -98,8 +105,8 @@ class Cdate(object):
 			finalString = ""
 		
 		for c in clauses:
-			chromoeval += eval(c)
+			chroeval += eval(c)
 		
-		return chromoeval / float(len(clauses))
+		return chroeval / float(len(clauses))
 		
 	

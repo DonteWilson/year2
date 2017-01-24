@@ -1,6 +1,6 @@
 import defines
 from defines import *
-import random
+import time
 
 file = "CNFexpress.txt"
 inFile = open(file, 'r')
@@ -27,57 +27,86 @@ else:
 data += (string + "\n" + "\n")   #format of the data being presented.
 
 
-if(inFile):
-		numofClauses = 0;
-		literals = [];
-		population = [];
-		clausesOpen = 0;
-		ors = 0;
-		nots = 0;
-		ands = 0;
-		a = 1;
-		b = 1;
-		c = 1;
-		e = 1;
-		f = 1;
+
+numofClauses = 0;
+maxpop = 4;
+expression = ""
+clauses = []
+literals = []
+population = []
+checkClause = "false";
+clausesString = "";
+		#ors = 0;
+		#nots = 0;
+		#ands = 0;
+		#a = 1;
+		#b = 1;
+		#c = 1;
+		#e = 1;
+		#f = 1;
 				
-		for char in string:
-			if char == '!':
-				nots += 1;
+for char in string:
+	if char == '!' and checkClause == "true":
+		clausesString += '~';
 			
-			elif char =='|':
-				ors += 1;
+	elif char =='|' and checkClause == "true":
+		clausesString += char;
 			
-			elif char == '&':
-				ands += 1;
+	elif char == '&':
+		clausesString += char;
 			
-			elif char == ' ':
-				continue;
+	elif char == ' ':
+		continue;
 			
-			elif char == '(':
-				clausesOpen = 1;
-			
-			elif char == '\n':
-				continue;
+	elif char == '(' and checkClause == "false":
+		checkClause = "true";
+		clausesString += '(';
 				
-			elif char == ')' and clausesOpen == 1:
-				numofClauses += 1;
-				clausesOpen = 0;
 			
-			else:
-				if char in literals:
-					continue;
+	elif char == '\n':
+		continue;
 				
-				literals.append(char);
+	elif char == ')' and checkClause == "true":
+		checkClause = "false";
+		clausesString += ')';
+		clauses.append(clausesString);
+		clausesString = "";
+				
+			
+	elif checkClause == "true":
+		clausesString += char;
+		if char in literals:
+			continue;				
+		literals.append(char);
+
+for string in clauses:
+	expression += string 
 
 #Mutation / Candidates
-population = RV(len(literals), 4) #uses the random value function created in defines.py to create population
+population = RV(len(literals), maxpop) #uses the random value function created in defines.py to create population
 num = 0
 data +=("Population:" + "\n")
 
 for p in population:
 	num += 1
 	data +=("Candidate " + str(num) + ":" + str(p.value) + "\n")
+
+data += "\n"
+start = time.time()
+end = None 
+FS = 0;
+S = None
+generations = 0
+while(FS == 0 and generations < 3000):
+	generations += 1
+	data +=("\n" + "Generations " + str(generations) + "\n")
+	for can in population:
+		if can.Evaluate(expression, literals, can) >= 1:
+			end = time.time()
+			S = can
+			FS = 1;
+			break
+
 
 print(data)  #prints the data obtained and puts it on the screen.
 
