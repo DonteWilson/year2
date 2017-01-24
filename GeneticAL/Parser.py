@@ -4,10 +4,33 @@ import random
 
 file = "CNFexpress.txt"
 inFile = open(file, 'r')
+
+print("Select an Expression: \n")
+lineNum = 1
+CNFexpress = []  #contains a the list of CNF expressions
 for string in inFile:
-	if(inFile):
+	print(str(lineNum) + ". " + string)
+	CNFexpress.append(string)
+	lineNum += 1
+
+data = ""     #will store the data that will be presented
+input = input()     #takes input from the user 
+input = int(input)
+
+if input >= 0 and input < len(CNFexpress):
+	string = CNFexpress[input]  #makes the string of the input choice of the user.
+else:
+	selection = random.randrange(0, len(CNFexpress), 1)
+	string = CNFexpress(selection)
+
+
+data += (string + "\n" + "\n")   #format of the data being presented.
+
+
+if(inFile):
 		numofClauses = 0;
 		literals = [];
+		population = [];
 		clausesOpen = 0;
 		ors = 0;
 		nots = 0;
@@ -46,15 +69,26 @@ for string in inFile:
 					continue;
 				
 				literals.append(char);
-		
-		literals.sort();
-		print(string);
-		print('Literals: ', literals);
-		print('Amount of Nots: ',nots);
-		print('Amount of Ands:' ,ands);
-		print('Amount of Ors: ',ors);
-		print('Clauses: ',numofClauses);
-		print("\n");
+
+#Mutation / Candidates
+population = RV(len(literals), 4) #uses the random value function created in defines.py to create population
+num = 0
+data +=("Population:" + "\n")
+
+for p in population:
+	num += 1
+	data +=("Candidate " + str(num) + ":" + str(p.value) + "\n")
+
+print(data)  #prints the data obtained and puts it on the screen.
+
+literals.sort();
+print(string);
+print('Literals: ', literals);
+print('Amount of Nots: ',nots);
+print('Amount of Ands:' ,ands);
+print('Amount of Ors: ',ors);
+print('Clauses: ',numofClauses);
+print("\n");
 			
 	
 	
