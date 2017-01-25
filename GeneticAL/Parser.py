@@ -29,7 +29,7 @@ data += (string + "\n" + "\n")   #format of the data being presented.
 
 
 numofClauses = 0;
-maxpop = 4;
+maxpop = 5;
 expression = ""
 clauses = []
 literals = []
@@ -48,15 +48,19 @@ clausesString = "";
 for char in string:
 	if char == '!' and checkClause == "true":
 		clausesString += '~';
+		numofClauses += 1;
 			
 	elif char =='|' and checkClause == "true":
 		clausesString += char;
+		numofClauses += 1;
 			
 	elif char == '&':
 		clausesString += char;
+		numofClauses += 1;
 			
 	elif char == ' ':
 		continue;
+		
 			
 	elif char == '(' and checkClause == "false":
 		checkClause = "true";
@@ -93,19 +97,22 @@ for p in population:
 
 data += "\n"
 start = time.time()
-end = None 
+end = None; 
 FS = 0;
-S = None
+S = None;
 generations = 0
-while(FS == 0 and generations < 3000):
+while(FS == 0 and generations < 2000):
 	generations += 1
 	data +=("\n" + "Generations " + str(generations) + "\n")
 	for can in population:
-		if can.Evaluate(expression, literals, can) >= 1:
+		#if can.Evaluate(expression, literals, can) >= 1:
 			end = time.time()
 			S = can
 			FS = 1;
 			break
+	bestCandidates = []
+	for can in population:
+		bestCandidates.append(can)
 
 
 print(data)  #prints the data obtained and puts it on the screen.
@@ -113,10 +120,7 @@ print(data)  #prints the data obtained and puts it on the screen.
 literals.sort();
 print(string);
 print('Literals: ', literals);
-print('Amount of Nots: ',nots);
-print('Amount of Ands:' ,ands);
-print('Amount of Ors: ',ors);
-print('Clauses: ',numofClauses);
+print('Clauses: ', numofClauses);
 print("\n");
 			
 	
